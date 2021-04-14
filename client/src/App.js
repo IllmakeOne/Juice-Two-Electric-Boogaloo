@@ -1,44 +1,25 @@
-import logo from './logo.svg';
-import './App.css'
-import Button from '@material-ui/core/Button'
-
-import axios from 'axios'
-
-import { useState, useEffect} from 'react'
+import SideBarAndHeader from './components/SideBarAndHeader'
+import { useState, useContext, createContext} from 'react'
 
 
-const getProds = async () => {
-  axios({
-      method: 'get',
-      url: `http://localhost:5000/prods`
-  }).then(response => {
-      console.log('started')
-      console.log(response)
-      // console.log(response.data)
-      return response.data
-  })
-}
-// console.log('started')
+export const MyContext = createContext()
 
 function App() {
 
-  const [aux, setAux] = useState('aaaa')
+  const [global, setGlobal] = useState({lg: 'en'})
 
-  useEffect(()=>{
-    const Anon = async ()=>{
-      const dab = await getProds()
-      setAux(dab)
+  const changeGlobal = (monde) => {
+    console.log(monde)
+    setGlobal(monde)
+  }
 
-    }
-    Anon()
-  },[])
 
   return (
-    <div className="redbagkround">
-      {/* <h2>{aux}</h2> */}
-      <Button onClick={getProds} >AAaq</Button>
-    </div>
-  );
+    <MyContext.Provider value={global}>
+      <SideBarAndHeader changeGlobal={changeGlobal} />
+    </MyContext.Provider> 
+  )
 }
 
 export default App;
+

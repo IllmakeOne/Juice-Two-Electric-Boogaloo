@@ -1,0 +1,524 @@
+{
+  "appointments": [
+    {
+      "id": "1",
+      "startDate": "2021-03-03T09:45",
+      "endDate": "2021-03-03T11:00",
+      "title": "Meeting",
+      "admin": "Radu",
+      "area": "Tennis 1",
+      "person": "Mircov",
+      "phone": "0720440760"
+    },
+    {
+      "id": "2",
+      "startDate": "2021-03-04T17:00",
+      "endDate": "2021-03-04T18:30",
+      "title": "Go to a gym",
+      "admin": "Robi",
+      "area": "Tennis 1",
+      "person": "Mihut",
+      "phone": "0720440763"
+    },
+    {
+      "id": "3",
+      "startDate": "2021-03-02T12:00",
+      "endDate": "2021-03-02T13:30",
+      "title": "Go to a gym",
+      "admin": "Sergiu",
+      "area": "Tennis 1",
+      "person": "Popovics",
+      "phone": "0720440761"
+    },
+    {
+      "id": "4",
+      "startDate": "2021-03-03T12:00",
+      "endDate": "2021-03-03T13:30",
+      "title": "Go to a gym",
+      "admin": "Sergiu",
+      "area": "Tennis 2",
+      "person": "Popovics",
+      "phone": "0720440761"
+    },
+    {
+      "id": "5",
+      "startDate": "2021-03-02T12:00",
+      "endDate": "2021-03-02T13:30",
+      "title": "Go to a gym",
+      "admin": "Sergiu",
+      "area": "Tennis 2",
+      "person": "Popovics",
+      "phone": "0720440761"
+    },
+    {
+      "id": "6",
+      "startDate": "2021-03-01T12:00",
+      "endDate": "2021-03-01T13:30",
+      "title": "Go to a gym",
+      "admin": "Sergiu",
+      "area": "Tennis 3",
+      "person": "Popovics",
+      "phone": "0720440761"
+    },
+    {
+      "id": "7",
+      "startDate": "2021-03-02T12:00",
+      "endDate": "2021-03-02T13:30",
+      "title": "Go to a gym",
+      "admin": "Andrei",
+      "area": "Tennis 3",
+      "person": "Iudean",
+      "phone": "0720440762"
+    },
+    {
+      "id": "8",
+      "startDate": "2021-03-04T12:00",
+      "endDate": "2021-03-04T13:30",
+      "title": "Go to a gym",
+      "admin": "Radu",
+      "area": "OutDoor",
+      "person": "Crenguta",
+      "phone": "0720440764",
+      "comment": "comment"
+    }
+  ],
+  "prods": [
+    {
+      "id": 1,
+      "name": "Fanta .5",
+      "type": "Juice",
+      "vat": 9,
+      "price": 6,
+      "stock": 8,
+      "fixedPrice": true,
+      "fav": false,
+      "image": "https://hawkesdesign.files.wordpress.com/2014/09/fantalogo-svg.png"
+    },
+    {
+      "id": 2,
+      "name": "Coffee",
+      "type": "Warm Drink",
+      "price": 6,
+      "vat": 9,
+      "stock": 20,
+      "fav": true,
+      "fixedPrice": true,
+      "image": "https://i.pinimg.com/originals/07/e5/0f/07e50f0b99276f62c13b6df25a765d0c.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Cola .5",
+      "type": "Juice",
+      "price": 7,
+      "vat": 9,
+      "stock": 19,
+      "fav": false,
+      "fixedPrice": true,
+      "image": "https://1000logos.net/wp-content/uploads/2016/11/Coca-Cola-Logo.png"
+    },
+    {
+      "id": 4,
+      "name": "Water .5",
+      "type": "Juice",
+      "vat": 9,
+      "price": 5,
+      "stock": 50,
+      "fav": false,
+      "fixedPrice": true,
+      "image": "https://www.coca-colahellenic.com/content/dam/cch/us/images/our-24-7-portfolio/brand-image/Dorna_logo_300x300.png"
+    },
+    {
+      "id": 5,
+      "name": "Tennis",
+      "type": "Service",
+      "price": 85,
+      "image": "https://hawkesdesign.files.wordpress.com/2014/09/fantalogo-svg.png"
+    },
+    {
+      "id": 6,
+      "name": "Tea",
+      "type": "Warm Drink",
+      "vat": 9,
+      "price": 6,
+      "stock": 50,
+      "fav": false,
+      "fixedPrice": true,
+      "image": "https://hawkesdesign.files.wordpress.com/2014/09/fantalogo-svg.png"
+    },
+    {
+      "id": 7,
+      "name": "Shweppes .5",
+      "type": "Juice",
+      "vat": 9,
+      "price": 6,
+      "stock": 49,
+      "fav": false,
+      "fixedPrice": true,
+      "image": "https://seeklogo.com/images/S/schweppes-logo-7A8E4A77EC-seeklogo.com.png"
+    },
+    {
+      "id": 8,
+      "name": "Timisoreana",
+      "type": "Beer",
+      "vat": 19,
+      "price": 6,
+      "stock": 50,
+      "fav": true,
+      "fixedPrice": true,
+      "image": "https://www.pngjoy.com/pngm/426/7798171_tea-logo-fuze-tea-logo-png-png-download.png"
+    },
+    {
+      "id": 9,
+      "name": "Cappy .25",
+      "type": "Juice",
+      "vat": 9,
+      "price": 6,
+      "stock": 50,
+      "fav": true,
+      "fixedPrice": true,
+      "image": "https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0018/3252/brand.gif?itok=AWcFKJRX"
+    },
+    {
+      "id": 10,
+      "name": "Cappy .3",
+      "type": "Juice",
+      "vat": 9,
+      "price": 6,
+      "stock": 50,
+      "fav": false,
+      "fixedPrice": true,
+      "image": "https://www.crostopizza.ro/wp-content/uploads/2020/05/logo-cappy.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Coke .3",
+      "type": "Juice",
+      "vat": 9,
+      "price": 6,
+      "stock": 50,
+      "fav": false,
+      "fixedPrice": true,
+      "image": "https://1000logos.net/wp-content/uploads/2016/11/Coca-Cola-Logo.png"
+    },
+    {
+      "id": 12,
+      "name": "Sparkle .5",
+      "type": "Juice",
+      "vat": 9,
+      "price": 6,
+      "stock": 50,
+      "fav": false,
+      "fixedPrice": true,
+      "image": "https://www.coca-colahellenic.com/content/dam/cch/us/images/our-24-7-portfolio/brand-image/Dorna_logo_300x300.png"
+    }
+  ],
+  "cartlists": [
+    {
+      "id": 16,
+      "name": "Nicu",
+      "date": "30-05-21",
+      "prods": [
+        {
+          "id": 1,
+          "stock": 10
+        },
+        {
+          "id": 2,
+          "stock": 20
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Keni",
+      "date": "30-05-21",
+      "prods": [
+        {
+          "id": 1,
+          "stock": 11
+        }
+      ]
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "suppliers": [
+    {
+      "name": "CokeSuppliers",
+      "bank": "BRD",
+      "cui": "ABCC"
+    },
+    {
+      "name": "SnackkSupplier",
+      "bank": "PNTX",
+      "cui": "CBAA"
+    }
+  ],
+  "clients": [
+    {
+      "id": 0,
+      "key": 1,
+      "name": "Robert Banu",
+      "email": "lmao",
+      "phone": "0720440760",
+      "crtsub": {
+        "type": "ffull",
+        "left": -1,
+        "start": "1-4-2021",
+        "end": "2-5-2021"
+      },
+      "comment": "Changed Comment"
+    },
+    {
+      "id": 1,
+      "name": "Decretann Ioana",
+      "email": null,
+      "phone": "0720440760",
+      "crtsub": {
+        "type": "ffull",
+        "left": -1,
+        "start": "2-4-2021",
+        "end": "2-5-2021"
+      },
+      "comment": "Changed Comment"
+    },
+    {
+      "id": 3,
+      "name": "Calutu Camelia",
+      "email": null,
+      "phone": "0720440761",
+      "crtsub": {
+        "type": "f10",
+        "left": 5,
+        "end": "03-05-2021"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Neamu Gatu",
+      "email": "@gasdas",
+      "phone": "0720440763",
+      "crtsub": {
+        "type": "a10",
+        "left": 8,
+        "end": "04-05-2021"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Neamu Gatu",
+      "email": "@gasdas",
+      "phone": "0720440763",
+      "crtsub": {
+        "type": "a10",
+        "left": 8,
+        "end": "04-05-2021"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Neamu Gatu",
+      "email": "@gasdas",
+      "phone": "0720440763",
+      "crtsub": {
+        "type": "a10",
+        "left": 8,
+        "end": "04-05-2021"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Neamu Gatu",
+      "email": "@gasdas",
+      "phone": "0720440763",
+      "crtsub": {
+        "type": "a10",
+        "left": 8,
+        "end": "04-05-2021"
+      }
+    }
+  ],
+  "keys": [
+    {
+      "id": 1,
+      "assigned": false
+    },
+    {
+      "id": 2,
+      "assigned": true
+    },
+    {
+      "id": 68,
+      "assigned": false
+    },
+    {
+      "id": 4,
+      "assigned": false
+    },
+    {
+      "id": 5,
+      "assigned": true
+    },
+    {
+      "id": 6,
+      "assigned": false
+    },
+    {
+      "id": 11,
+      "assigned": true
+    },
+    {
+      "id": 12,
+      "assigned": true
+    },
+    {
+      "id": 13,
+      "assigned": false
+    },
+    {
+      "id": 14,
+      "assigned": true
+    },
+    {
+      "id": 15,
+      "assigned": true
+    },
+    {
+      "id": 16,
+      "assigned": true
+    },
+    {
+      "id": 17,
+      "assigned": true
+    }
+  ],
+  "tennis": [
+    {
+      "id": 1,
+      "name": "dan",
+      "field": "T1",
+      "date": "9-4-2021",
+      "status": "ocasional",
+      "duration": 3
+    },
+    {
+      "id": 5,
+      "name": "robi",
+      "field": "T2",
+      "date": "7-4-2021",
+      "status": "ocasional",
+      "duration": 4
+    },
+    {
+      "id": 10,
+      "name": "puste",
+      "field": "T3",
+      "date": "10-4-2021",
+      "status": "trainer",
+      "duration": 2
+    }
+  ],
+  "phones": [
+    {
+      "name": "YaBoi",
+      "phone": "0722527339"
+    },
+    {
+      "name": "Rob",
+      "phone": "0720440760"
+    },
+    {
+      "name": "Dani",
+      "phone": "0722632228"
+    }
+  ],
+  "apps": [
+    {
+      "time": 15,
+      "name": "Costa",
+      "field": "Hall",
+      "date": "10-4-2021",
+      "status": "trainer",
+      "duration": 2
+    },
+    {
+      "time": 20,
+      "name": "kosta",
+      "field": "OutDoor",
+      "date": "10-4-2021",
+      "status": "sub",
+      "duration": 3
+    },
+    {
+      "time": 36,
+      "name": "frank",
+      "field": "A1",
+      "date": "4-3-2021",
+      "status": "sub",
+      "duration": 3
+    },
+    {
+      "time": 25,
+      "name": "Costa",
+      "field": "T3",
+      "date": "10-4-2021",
+      "status": "corp",
+      "duration": 2
+    },
+    {
+      "time": 15,
+      "name": "Costa",
+      "field": "T2",
+      "date": "9-4-2021",
+      "status": "tr",
+      "duration": 2
+    },
+    {
+      "time": 35,
+      "name": "Costa",
+      "field": "T1",
+      "date": "10-4-2021",
+      "status": "oc",
+      "duration": 2
+    },
+    {
+      "time": 5,
+      "name": "Costa",
+      "field": "T3",
+      "date": "10-4-2021",
+      "status": "acc",
+      "duration": 2
+    },
+    {
+      "time": 5,
+      "name": "Costa",
+      "field": "T2",
+      "date": "9-4-2021",
+      "status": "cw",
+      "duration": 2
+    },
+    {
+      "time": 5,
+      "name": "Costa",
+      "field": "T1",
+      "date": "10-4-2021",
+      "status": "sub",
+      "duration": 2
+    }
+  ]
+}

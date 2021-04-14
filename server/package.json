@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
-    "ss": "node index.js"
+    "start": "nodemon server.js",
+    "startserver": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Robert-D Banu",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -17,7 +16,7 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7",
-    "notenv": "^2.0.3",
     "pg": "^8.2.2"
   }
+  
 }
