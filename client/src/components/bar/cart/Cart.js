@@ -11,7 +11,7 @@ import { css, cx } from '@emotion/css'
 import { useState, useEffect, useContext } from 'react'
 
 import MyDialogue from '../pieces/MyDialogue'
-import { addCartList, fetchCartProdLists } from '../../DBconn'
+import { addCartList, deleteCartList,fetchCartProdLists } from '../../DBconn'
 import ChangePriceB from './ChangePriceB'
 
 
@@ -30,11 +30,11 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
       else
           return ro
     }
-
-    const [prodLists, setProdLists] = useState([])
     const [open, setOpen] = useState(false)
     const [dialogueVariant, setDialogVariant] = useState('load')
+    const [prodLists, setProdLists] = useState([])
 
+    
 
     useEffect(() => {
         const anon = async ()=>{
@@ -43,8 +43,8 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
             // console.log(serverLists)
         }
         anon()
-
     }, [])
+
 
     const getSum = () => {
         var sum = 0
@@ -74,14 +74,18 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
         if(dialogueVariant == 'save' ){
             var aux = []
             basket.forEach(element => {
-                console.log(element)
                 aux.push({id: element.id, stock: element.stock})    
             })
+            const dab = prodLists
+            dab.push({name: value,prods: aux, date: formatDate(new Date) })
+            setProdLists(dab)
             addCartList({name: value,prods: aux, date: formatDate(new Date) })
             removeAllCart()
         } else if(dialogueVariant == 'load'){
             removeAllCart()
-            addBulkItem(value)
+            setProdLists(prodLists.filter(el=>el.id!=value.id))
+            deleteCartList(value.id)
+            addBulkItem(value.prods)
         }
     }
 
@@ -94,6 +98,7 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
         <div >
 
         <MyDialogue 
+            prodLists={prodLists}
             open={open} 
             onSubmit={handleSubmit} 
             onClose={handleClose}

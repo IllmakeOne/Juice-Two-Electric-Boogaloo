@@ -31,9 +31,8 @@ const useStyles = makeStyles({
     },
   });
 
-const MyDialogue = ({ onClose, open, onSubmit, variant}) => {
+const MyDialogue = ({ prodLists, onClose, open, onSubmit, variant}) => {
     const classes = useStyles();
-    const [prodLists, setProdLists] = useState([])
     const [crtList, setCrtList] = useState('')
 
     const cx = useContext(MyContext)
@@ -43,17 +42,6 @@ const MyDialogue = ({ onClose, open, onSubmit, variant}) => {
       else
           return ro
     }
-
-    useEffect(() => {
-        const anon = async ()=>{
-            const serverLists = await fetchCartProdLists()
-            setProdLists(serverLists)
-            // console.log(serverLists)
-        }
-        anon()
-
-    }, [])
-
   
     const handleClose = () => {
       onClose()
@@ -79,7 +67,7 @@ const MyDialogue = ({ onClose, open, onSubmit, variant}) => {
             <DialogTitle>{decLg('Load a list','Incarca o lista')}</DialogTitle>
             <List>
               {prodLists.map((list) => (
-                <ListItem button onClick={() => handleListItemClick(list.prods)} key={list.id}>
+                <ListItem button onClick={() => handleListItemClick(list)} key={list.id}>
                   <ListItemAvatar>
                     <Avatar className={classes.avatar}>
                       <PersonIcon />

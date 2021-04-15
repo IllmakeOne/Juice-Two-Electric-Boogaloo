@@ -1,29 +1,72 @@
 import axios from 'axios'
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------Get ALL--------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const switchFavoriteItem = (newprod) => {
-    // console.log(newprod.fav)
-    axios({
-        method: 'put',
-        url: `http://localhost:5000/prods/${newprod.id}`,
-        data: {...newprod, fav: !newprod.fav}
-      }).then(response => {
-        return response.data
-    })
+export  const fetchProds = async () => {
+    return axios.get(`http://localhost:5000/prods`)
+         .then(function (response) {
+            console.log(response.data)
+            return response.data.map(el => {return {...el.data, id: el.id}})
+      })
 }
 
-export const addItem = (newprod) => {
+
+export  const fetchCartProdLists = async () => {
+    return axios.get(`http://localhost:5000/cart_lists`)
+    .then(function (response) {
+       console.log(response.data)
+       return response.data.map(el => {return {...el.data, id: el.id}})
+ })
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------Add One--------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const addCartList = async (newprod) => {
     // console.log(newprod.fav)
     axios({
         method: 'post',
-        url: `http://localhost:3001/prods`,
+        url: `http://localhost:5000/cart_lists`,
         data: newprod
       }).then(response => {
         return response.data
     })
 }
 
-export const addAppointment = (app) => {
+export const addItem = (newprod) =>{}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------Modify One--------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const switchFavoriteItem =  async (newprod) => {
+    axios({
+        method: 'put',
+        url: `http://localhost:5000/prods/${newprod.id}`,
+        data: {...newprod, fav: !newprod.fav}
+      }).then(response => {
+        // console.log(response.data)
+    })
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------Delete One--------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+export const deleteCartList = async (id) => {
+    // console.log(newprod.fav)
+    axios({
+        method: 'delete',
+        url: `http://localhost:5000/cart_lists/${id}`
+      }).then(response => {
+        return response.data
+    })
+}
+
+export const addAppointment = async (app) => {
     // console.log(newprod.fav)
     axios({
         method: 'put',
@@ -34,7 +77,7 @@ export const addAppointment = (app) => {
     })
 }
 
-export const switchKeyAssignment = (newKey) => {
+export const switchKeyAssignment = async (newKey) => {
     return axios({
         method: 'put',
         url: `http://localhost:3001/keys/${newKey.id}`,
@@ -45,7 +88,7 @@ export const switchKeyAssignment = (newKey) => {
       })
 }
 
-export const putClient = (newClient) => {
+export const putClient = async (newClient) => {
     return axios({
         method: 'put',
         url: `http://localhost:30f01/keys/${newClient.id}`,
@@ -56,7 +99,7 @@ export const putClient = (newClient) => {
       })
 }
 
-export const putKey = (newKey) => {
+export const putKey = async (newKey) => {
     return axios({
         method: 'put',
         url: `http://localhost:3001/keys/${newKey.id}`,
@@ -67,7 +110,7 @@ export const putKey = (newKey) => {
       })
 }
 
-export const unlockKey = (key) => {
+export const unlockKey = async (key) => {
     return axios({
         method: 'put',
         url: `http://localhost:3001/keys/${key.id}`,
@@ -82,7 +125,7 @@ export const unlockKey = (key) => {
       //and check out the client from the 
 }
 
-export const getSpecificKey = (keyId) => {
+export const getSpecificKey =  async (keyId) => {
     return axios.get(`http://localhost:3001/keys?id=${keyId}`)
          .then(function (response) {
             // console.log(response.data)
@@ -90,7 +133,7 @@ export const getSpecificKey = (keyId) => {
       })
 }
 
-export const getappsClients = () => {
+export const getappsClients =async () => {
     return axios.get(`http://localhost:3001/phones`)
          .then(function (response) {
             // console.log(response.data)
@@ -185,13 +228,6 @@ export const getNameAndPhones = async () => {
       })
 }
 
-
-export const addCartList = async (list)=>{
-    console.log(list)
-    //send to db new cartlist
-    // console.log(list)
-}
-
 //--------------------------Deletes----------------------
 
 export const DeleteAppointment = async ({app}) => {
@@ -205,13 +241,6 @@ export const DeleteAppointment = async ({app}) => {
 
 const API = 'http://localhost:3001/'
 
-export  const fetchProds = async () => {
-    return axios.get(`http://localhost:5000/prods`)
-         .then(function (response) {
-            console.log(response.data)
-            return response.data
-      })
-}
 
 export  const fetchKeys = async () => {
     const res = await fetch('http://localhost:3001/keys')
@@ -252,12 +281,6 @@ export  const fetchClients = async () => {
 
 //-----------------------------Setters--------------
 
-export  const fetchCartProdLists = async () => {
-    const res = await fetch('http://localhost:3001/cartlists')
-    const data = await res.json()
-    // console.log(data)
-    return data
-}
 
 
 

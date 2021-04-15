@@ -1,0 +1,8 @@
+create table suppliers(
+id SERIAL NOT NULL PRIMARY KEY,
+data json NOT NULL
+);
+create table cart_lists (
+id SERIAL NOT NULL PRIMARY KEY, 
+data json NOT NULL
+);

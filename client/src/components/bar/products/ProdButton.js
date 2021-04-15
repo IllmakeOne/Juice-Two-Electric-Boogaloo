@@ -15,8 +15,8 @@ const ProdButton = ({prod, onClick, className, changeFav}) => {
         const addToFav = async () => {
             //change item's fav to the oposite
             var aux = await switchFavoriteItem(prod)
+            // console.log(aux) 
             changeFav(prod.id)//triggeres rerender in parent
-            console.log(aux)
         }
 
 
