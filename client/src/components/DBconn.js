@@ -1,13 +1,14 @@
 import axios from 'axios'
+import {getNumberOfWeek} from './rec/schedules/pieces/DatesMethods'
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//-------------------------------------Get ALL--------------------------------------------------------
+//-------------------------------------Get ALL-------------------------------------------------------//
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export  const fetchProds = async () => {
     return axios.get(`http://localhost:5000/prods`)
          .then(function (response) {
-            console.log(response.data)
+            // console.log(response.data.map(el => {return {...el.data, id: el.id}}))
             return response.data.map(el => {return {...el.data, id: el.id}})
       })
 }
@@ -22,9 +23,40 @@ export  const fetchCartProdLists = async () => {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//-------------------------------------Add One--------------------------------------------------------
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+export const getNameAndPhones = async () => {
+    // console.log(date + ' ' + field)
+    return axios.get(`http://localhost:5000/phones`)
+         .then(function (response) {
+            // console.log(response.data.map(el => {return el.data}))
+            return response.data.map(el => {return el.data})
+      })
+}
+
+export const getApps = async (field) => {
+    return axios({
+        method: 'get',
+        url: `http://localhost:5000/apps/apps/${field}`
+      }).then(response => {
+        //   console.log(response.data)
+        // return []
+        return response.data.map(el => {return el.data})
+    })
+}
+
+export const getWeeklyApps = async (field) => {
+    return axios({
+        method: 'get',
+        url: `http://localhost:5000/apps/weekly/${field}`
+      }).then(response => {
+        //   console.log(response.data)
+        // return []
+        return response.data.map(el => {return el.data})
+    })
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------  Add One   ----------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const addCartList = async (newprod) => {
     // console.log(newprod.fav)
@@ -38,6 +70,41 @@ export const addCartList = async (newprod) => {
 }
 
 export const addItem = (newprod) =>{}
+
+export const addBill = async (items, cash, card) => {
+    // console.log({items, cash, card})
+    axios({
+        method: 'post',
+        url: `http://localhost:5000/bill/bar`,
+        data: {items, cash, card}
+      }).then(response => {
+          console.log(response.data)
+        return response.data
+    })
+}
+
+export const addAppointment = async (app) => {
+    // console.log(newprod.fav)
+    axios({
+        method: 'post',
+        url: `http://localhost:5000/app/week`,
+        data: app
+      }).then(response => {
+          console.log(response.data)
+        return response.data.data
+    })
+}
+
+export const addWeekAppointment = async (app) => {
+    axios({
+        method: 'post',
+        url: `http://localhost:5000/apps/add`,
+        data: app
+      }).then(response => {    
+        console.log(response.data)
+        return response.data
+    })
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------------Modify One--------------------------------------------------------
@@ -66,16 +133,6 @@ export const deleteCartList = async (id) => {
     })
 }
 
-export const addAppointment = async (app) => {
-    // console.log(newprod.fav)
-    axios({
-        method: 'put',
-        url: `http://localhost:3001/prods/${app.id}`,
-        data: app
-      }).then(response => {
-        return response.data
-    })
-}
 
 export const switchKeyAssignment = async (newKey) => {
     return axios({
@@ -149,15 +206,6 @@ export const getSpecificClient = (clientId) => {
       })
 }
 
-export const getAppsByDateandField = async ({date, field}) => {
-    // console.log(date + ' ' + field)
-    return axios.get(`http://localhost:3001/apps?date=${date}&field=${field}`)
-         .then(function (response) {
-            // console.log(response.data)
-            return response.data
-      })
-}
-
 export const getTennisCourts = async ({date}) => {
     var res=[]
     const t1 = await axios.get(`http://localhost:3001/apps?date=${date}&field=T1`)
@@ -200,15 +248,7 @@ export const updateClient = async (client) => {
       })
 }
 //------------Ghostsss---------------//appointments that await confimation or are in waiting for a postion
-export const getAppsByDateandFieldGhost=async ({date, field}) => {
-    // console.log(date + ' ' + field)
-    return axios.get(`http://localhost:3001/apps?date=${date}&field=${field}&status=cw`)
-         .then(function (response) {
-            // console.log(response.data)
-            return response.data
-      })
 
-}
 
 export const getGhosttennis = async ({date}) => {
     // console.log(date + ' ' + field)
@@ -219,14 +259,6 @@ export const getGhosttennis = async ({date}) => {
       })
 }
 
-export const getNameAndPhones = async () => {
-    // console.log(date + ' ' + field)
-    return axios.get(`http://localhost:3001/phones`)
-         .then(function (response) {
-            console.log(response.data)
-            return response.data
-      })
-}
 
 //--------------------------Deletes----------------------
 

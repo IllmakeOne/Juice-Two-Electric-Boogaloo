@@ -325,6 +325,10 @@ footer {
   
 }
 
+.highlitedField {
+  background-color: #ffbae4;
+}
+
 
   .cellwhite{
     background: rgb(100, 125, 235);
@@ -359,9 +363,9 @@ footer {
 .cell{
   height: 100%;
   border-radius: 11px ;
-  border-style: solid;
+  /* border-style: solid;
   border-width: 1px;
-  border-color: #f28313;
+  border-color: #f28313; */
   text-align: center;  
 }
 .cell:hover {

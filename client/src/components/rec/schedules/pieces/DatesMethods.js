@@ -10,6 +10,13 @@ export const formatDate = (date) =>{
 }
 
 
+export const getNumberOfWeek = () => {
+    const today = new Date();
+    const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+    const pastDaysOfYear = (today - firstDayOfYear) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+}
+
 // function getMonday(d) {
 //     d = new Date(d);
 //     var day = d.getDay(),

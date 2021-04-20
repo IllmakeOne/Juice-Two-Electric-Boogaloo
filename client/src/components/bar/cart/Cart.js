@@ -11,7 +11,7 @@ import { css, cx } from '@emotion/css'
 import { useState, useEffect, useContext } from 'react'
 
 import MyDialogue from '../pieces/MyDialogue'
-import { addCartList, deleteCartList,fetchCartProdLists } from '../../DBconn'
+import { addCartList, deleteCartList,fetchCartProdLists, addBill } from '../../DBconn'
 import ChangePriceB from './ChangePriceB'
 
 
@@ -91,6 +91,12 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
 
     const handleClose = () => {
         setOpen(false)
+    }
+
+    const payCash =()=>{
+        const sum = getSum()
+        // console.log('paycash clicked')
+        addBill(basket, sum , 0)
     }
 
     
@@ -189,7 +195,7 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
                         color="primary"
                         size="large"
                         startIcon={<IoIosCash />}
-                        // onClick ={handleClickOpen}
+                        onClick ={payCash}
                         >
                         Cash
                 </Button>

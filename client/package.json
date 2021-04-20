@@ -5,10 +5,8 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-
   "author": "Rober-D Banu",
   "license": "ISC",
-
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
     "@devexpress/dx-react-core": "^2.7.4",

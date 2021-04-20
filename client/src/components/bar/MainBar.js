@@ -56,7 +56,7 @@ function MainBar({startScreen}) {
                         </div>
             case BarScreen.ADDSUPPLIER:   
                 //add a new supplier to DB
-                    return <AddSupplier pushTop= {pushSupplier}/>
+                    return <AddSupplier pushTop= {()=>{}}/>
             case BarScreen.ADDSTOCK:  
                 //add new sellable item
                     return <AddStock pushTop={addItem}/>
@@ -120,9 +120,6 @@ function MainBar({startScreen}) {
     
         bar.prods[indexProd].stock +=  bar.cart[indexBask].stock
         bar.cart.splice(indexBask,1)
-
-        // console.log(bar)
-       
         setBar({prods: bar.prods, cart: bar.cart})
     }
 
@@ -146,45 +143,26 @@ function MainBar({startScreen}) {
         setBar({prods: bar.prods, cart: bar.cart})
     }
 
-    const addtoCart =  (id) => {
+    const addtoCart =  (inprod) => {
         // console.log(id)
-        var flag = 0
-        const bruh = bar.prods
+        const auxProds = bar.prods
         const auxBasket = bar.cart
-        var aux = null
-       bruh.map(
-            function(prod) {
-                if(prod.id == id){
-                    console.log(prod.stock)
-                    if(prod.type != 'Service' && prod.stock > 0){
-                        prod.stock = prod.stock - 1
-                        aux = {
-                            id: prod.id,
-                            name: prod.name,
-                            stock: 1,
-                            price: prod.price,
-                            fixedPrice: prod.fixedPrice
-                        }
-                    } else {
-                        flag = 1
-                        console.log('dirtier')
-                    }
-                    
-                }
-            })
-        
-        if(flag == 0){console.log('dirty')
-            const indexof = auxBasket.findIndex(elem => elem.id == id)
-            if(indexof== -1){
-                //if it finds it , increase basket stock
-                auxBasket.push(aux)
-            } else {
-                //if it doesnt, add it wiht stock 1
-                auxBasket[indexof].stock += 1
-            }
-            // console.log(bar.cart)
-            setBar({prods: bruh, cart: auxBasket})
+
+        const indexofprod = auxProds.findIndex(el => el.id==inprod.id)
+        auxProds[indexofprod].stock-=1
+        var aux = JSON.parse(JSON.stringify(auxProds[indexofprod]))
+
+        const indexof = auxBasket.findIndex(el => el.name==inprod.name)
+        if(indexof == -1){
+            //if it doesnt, add it wiht stock 1
+            console.log(aux)
+            auxBasket.push({...aux, stock: 1})
+        } else {
+            //if it finds it , increase basket stock
+            auxBasket[indexof].stock += 1
         }
+        // console.log(bar.cart)
+        setBar({prods: auxProds, cart: auxBasket})
     }
 
     const addBulkItem =  (cart) => {
@@ -207,39 +185,6 @@ function MainBar({startScreen}) {
         })
 
         setBar({prods: auxProds, cart: result})
-    }
-
-
-    /**
-     * adds item to db, with stock .
-     * @param {*} item 
-     */
-    const addItemtoDB = (item) =>{
-        const to_send = {
-            fixedPrice: item.type=='Service'? false : true,
-            //fixed price is false if the item is a service
-            stock : 0,
-            ...item
-        }
-        // Phetch('post', `prods/`, to_send
-        // console.log("bruh")
-        // console.log(to_send)
-
-    }
-
-    /**
-     * send the new supplier to the DB
-     * @param {} item 
-     */
-    const pushSupplier = (item) =>{
-        console.log(item)
-        //TODO
-        
-    }
-
-    const pushItemtoStock = (item) =>{
-        console.log(item)
-        //TODO
     }
 
     /*onSubmit = { } */

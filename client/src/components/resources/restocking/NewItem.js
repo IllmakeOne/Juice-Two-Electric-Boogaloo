@@ -42,6 +42,7 @@ function NewItem() {
                 var vat = inprods.filter(e=>e.type == el)
                 return {name: el , vat: vat[0].vat}
             })
+            console.log(auxtypes)
             setUniqueTypes(auxtypes)
             // console.log(auxtypes)    
         }

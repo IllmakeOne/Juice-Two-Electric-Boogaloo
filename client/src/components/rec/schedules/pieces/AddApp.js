@@ -21,7 +21,6 @@ import Switch from '@material-ui/core/Switch'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 
-import { addAppointment } from '../../../DBconn'
 import { MyContext } from '../../../../App'
 import { GridColumn, GridRow } from 'emotion-flex-grid'
 import PickDate from './PickDate';
@@ -33,8 +32,13 @@ import PickClinetandNr from './PickClinetandNr'
 import {formatDate} from './DatesMethods'
 import PickNamePhone from '../../../../containers/inputs/PickNamePhone'
 
+const getDayofWeel = (date) => { 
+    const spl = date.split('-')
+    const todate = new Date(spl[2], (spl[1] - 1), spl[0])
+    return todate.getDay()
+}
 
-function AddApp({open,closeAppDialog, info}) {
+function AddApp({open,closeAppDialog, pushtoDB, info}) {
     // console.log(info)
     const C = useStyles()    
     const cx = useContext(MyContext)
@@ -51,26 +55,13 @@ function AddApp({open,closeAppDialog, info}) {
 
     
     const [crtApp, setCrtApp]= useState(defaultApp)
-    // useEffect(() => {
-    //     setCrtApp({...crtApp,
-    //         field: info.field, 
-    //         time: info.time, 
-    //         date:info.date
-    //         })
-    // }, [])
 
-    useEffect(()=>{console.log(crtApp)},[crtApp])
+    // useEffect(()=>{console.log(crtApp)},[crtApp])
 
     const changeAppStatus = e => {
         console.log(e.target.value)
         setCrtApp({...crtApp, status: e.target.value})
     }
-
-    const changeAppTime = e =>{
-        console.log(e.target.value)
-        setCrtApp({...crtApp, time: tymes.indexOf(e.target.value)})
-    }
-
 
     const handleClose = () => {
         closeAppDialog()
@@ -78,10 +69,10 @@ function AddApp({open,closeAppDialog, info}) {
 
     const makeAppointment = () => {
         closeAppDialog()
-        // if(checkOut(crtApp) == true){
-        //     addAppointment(crtApp)
-        //     setCrtApp(defaultApp)
-        // }
+        const weekly = (crtApp.status == 'corp' ||  crtApp.status == 'tr' ||  crtApp.status == 'sub')
+        const datey = weekly == true ? getDayofWeel(info.date): info.date
+        pushtoDB({...crtApp, date: datey, field: info.field, time: info.time, weekly: weekly})
+        setCrtApp(defaultApp)
     }
 
     const typeOptions = info.var =='all'?[
@@ -197,7 +188,7 @@ function AddApp({open,closeAppDialog, info}) {
 
     const changeAppduration = e =>{
         // console.log(e.target.value)
-        var aux = 1 + e.target.value
+        var aux = e.target.value
         setCrtApp({...crtApp, duration: aux})
     }
 

@@ -28,7 +28,7 @@ app.post('/', async(req, res) => {
 app.delete('/:id', async(req, res) => {
   const dbCall = await db.querry(`DELETE FROM cart_lists WHERE id = ${req.params.id} `)
   res.status(200).send(dbCall.rows)
-  console.log(dbCall)
+//   console.log(dbCall)
 })
 
 

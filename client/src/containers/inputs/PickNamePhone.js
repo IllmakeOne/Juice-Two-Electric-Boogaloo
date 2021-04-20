@@ -42,6 +42,9 @@ const PickNamePhone=({setNamePhone}) => {
   const handleSubmit = (event) => {
     // console.log('Handle submit called')
     event.preventDefault()
+    if(phones.indexOf(el=>el.name == crtPhone.name)==-1){
+        //add number & name to database
+    }
     setNamePhone(crtPhone)
     setOpen(false)
   }

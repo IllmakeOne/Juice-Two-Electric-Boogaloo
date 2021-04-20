@@ -98,7 +98,7 @@ export default function MyAppBar({changeGlobal}){
             onClose={handleClose}
             >
             <MenuItem  onClick={()=>handleCloseButton('en')}>English</MenuItem>
-            <MenuItem  onClick={()=>handleCloseButton('ro')}>Romanian</MenuItem>            
+            <MenuItem  onClick={()=>handleCloseButton('ro')}>Romana</MenuItem>            
           </Menu> 
         </div>
 

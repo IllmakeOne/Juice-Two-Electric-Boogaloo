@@ -10,20 +10,17 @@ import EmptyCell from '../cells/EmptyCell'
 import { Paper } from '@material-ui/core'
 
 import  {getCrtWeek, getNextWeek } from '../pieces/DatesMethods'
-import { red } from '@material-ui/core/colors'
+
 
 
 
 
 const dayLenght = 38
 
-function ColumnDateField({date,name, field, _mouseMove, onDubClick, 
-                        rowLight, openShowApp, variant}) {
+function ColumnDateField({apps, date,name, field, _mouseMove, onDubClick, 
+                        rowLight, openShowApp, dayofWeek}) {
     const C = useStyles()
-    const [apps, setApps] = useState([])
-    // console.log(date)
-
-    const getallQ = variant=='all'
+    // console.log(apps)
 
     const getmaxappLengh = (timestart, court) => {
         var res = 0
@@ -49,46 +46,6 @@ function ColumnDateField({date,name, field, _mouseMove, onDubClick,
     const makeApp = (time, fieldd, maxL) => {
         onDubClick(time, date, fieldd,maxL)
     }    
-
-    useEffect(() =>{
-        const getApps = async () => {
-            if(getallQ){
-                if(field == 'Tennis' || field =='Tenis') {
-                    var serverApps = await getTennisCourts({date})
-                    // console.log(serverApps)
-                    setApps(serverApps)
-                } else if(field == 'OutDoor' || field =='Fotbal') {
-                    const serverApps = await getAppsByDateandField({date: date,field: 'OutDoor'})
-                    // console.log(serverApps)
-                    setApps(serverApps)
-                } else if(field == 'Sala Polivalenta' || field =='Hall') {
-                    const serverApps = await getAppsByDateandField({date:date,field: 'Hall'})
-                    setApps(serverApps)
-                } else if(field == 'Aerobic') {
-                    const serverApps = await getAppsByDateandField({date,field})
-                    setApps(serverApps)                    
-                } 
-            } else {
-                if(field == 'Tennis' || field =='Tenis') {
-                    var serverApps = await getGhosttennis({date})
-                    // console.log(serverApps)
-                    setApps(serverApps)
-                } else if(field == 'OutDoor' || field =='Fotbal') {
-                    const serverApps = await getAppsByDateandFieldGhost({date: date,field: 'OutDoor'})
-                    // console.log(serverApps)
-                    setApps(serverApps)
-                } else if(field == 'Sala Polivalenta' || field =='Hall') {
-                    const serverApps = await getAppsByDateandFieldGhost({date:date,field: 'Hall'})
-                    setApps(serverApps)
-                } else if(field == 'Aerobic') {
-                    const serverApps = await getAppsByDateandFieldGhost({date,field})
-                    setApps(serverApps)                    
-                } 
-            }
-        }
-        getApps()
-    }, [date, field])
-
 
     const generateLine = () => {
         var ret = []
@@ -164,7 +121,7 @@ function ColumnDateField({date,name, field, _mouseMove, onDubClick,
 
                 for ( i = 0;i < dayLenght ; i++) {
 
-                    const aux = apps.filter(el => el.field == court).filter(el => el.time==i).filter(el => el.date===date )
+                    const aux = apps.filter(el => el.field == court).filter(el => el.time==i)
 
                     if (aux.length != 0){
                         const el = aux[0]
@@ -213,7 +170,7 @@ function ColumnDateField({date,name, field, _mouseMove, onDubClick,
                 )
         } else { // if it not tennis(or aerobic) fill it normally, with one column for each day
             for ( i = 0;i < dayLenght ; i++){
-                const aux = apps.filter(el => el.time==i).filter(el => el.date === date)
+                const aux = apps.filter(el => el.time==i)
                 if (aux.length != 0){
                     const el = aux[0]
                     
@@ -263,7 +220,7 @@ function ColumnDateField({date,name, field, _mouseMove, onDubClick,
                     {date}
             </Paper>  
 
-        </GridColumn> 
+        </GridColumn>   
     )
 }
 

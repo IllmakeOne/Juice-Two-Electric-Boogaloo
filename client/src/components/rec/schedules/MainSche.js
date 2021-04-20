@@ -3,7 +3,7 @@ import ScheduleTabs from './pieces/ScheduleTabs'
 
 import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { fetchAppoitments, fetchApprow} from '../../DBconn'
+import { getApps, getWeeklyApps, addWeekAppointment} from '../../DBconn'
 import { GridRow, GridColumn } from 'emotion-flex-grid'
 
 
@@ -16,8 +16,13 @@ import { getWeek } from './pieces/DatesMethods'
 import DummyWeek from './scheds/DummyWeek'
 import FieldAndDateChanger from './pieces/shedspieces/FieldAndDateChanger'
 import AddDummyApp from './pieces/shedspieces/AddDummyApp'
+// import e from 'express'
 
-
+const getNumberOfWeek = (today) => {
+    const firstDayOfYear = new Date(today.getFullYear(), 0, 1)
+    const pastDaysOfYear = (today - firstDayOfYear) / 86400000
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)
+}
 
 export const FIELDS = {
     T1: 'Tennis 1',
@@ -44,6 +49,46 @@ function MainSche() {
 
     const[timeLight, setTimeLight] = useState(-1)
     const[rowLight, setRowLight] = useState(-1)
+
+
+    const [ocases, setOcases] = useState([])
+    const [weeklies, setWeeklies] = useState([])
+
+    /*
+    useEffect(() => {
+        const getaaaaaApps = async ()=>{
+            const thisweek = await getApps(crtField)
+            console.log(thisweek)
+            setOcases(thisweek)
+        }
+        const getWApps = async ()=>{
+            const weeklys = await getWeeklyApps(crtField)
+            setWeeklies(weeklys)      
+        }
+        getaaaaaApps()
+        getWApps()
+    }, [])
+    */
+
+    /*
+    useEffect(()=>{
+        const getaaaaaApps = async ()=>{
+            const thisweek = await getApps(crtField)
+            console.log('dab this week')
+            console.log(thisweek)
+            setOcases(thisweek)
+        }
+        const getWApps = async ()=>{
+            const weeklys = await getWeeklyApps(crtField)
+            console.log('dab weekly')
+            console.log(weeklys)
+            setWeeklies(weeklys)      
+        }
+    getaaaaaApps()
+    getWApps()
+    }, [crtField])
+    */
+
 
     const changeToday = (newDate) =>{
         setToday(newDate)
@@ -88,6 +133,19 @@ function MainSche() {
         setShowAOpen(false)
     }
 
+    const addAppointmentDB = async (app) =>{
+        console.log(app)
+        const newapp = await addWeekAppointment(app)
+        // console.log(newapp)  
+        // if(newapp.weekly == false){
+        //     ocases.push(newapp)
+        //     setOcases(ocases)
+        // } else {
+        //     weeklies.push(newapp)
+        //     setWeeklies(weeklies)
+        // }
+    }
+
     return (
         <div className='cart_svlist' >
         <br/>
@@ -106,6 +164,7 @@ function MainSche() {
 
             <WeekSchedule 
                 variant='all'
+                apps = {ocases.filter(el=>el.status != 'cw' && el.status!= 'acc').concat(weeklies)}
                 field = {crtField} 
                 today = {today}
                 weekMutiplier = {weekMutiplier}
@@ -128,6 +187,7 @@ function MainSche() {
             
             <WeekSchedule 
                 variant='dummy'
+                apps = {ocases.filter(el=> el.status == 'cw' || el.status == 'acc')}
                 field = {crtField} 
                 today = {today}
                 weekMutiplier = {weekMutiplier}
@@ -141,14 +201,14 @@ function MainSche() {
                 />
 
 
-
             <AddApp 
                 open = {open} 
                 closeAppDialog = {closeAppDialog}
+                pushtoDB = {addAppointmentDB}
                 info={info}
                 />
                 
-            <AddDummyApp 
+            <AddDummyApp //show app
                 open = {showAOpen} 
                 closeDummyAppDialog = {closeShowAopen}
                 app={appShow}

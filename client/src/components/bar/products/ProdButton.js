@@ -26,11 +26,12 @@ const ProdButton = ({prod, onClick, className, changeFav}) => {
             {/* <GridColumn width = {4}> */}
             <GridRow direction='column'>
                 <GridColumn> 
-                    <div onClick ={()=>onClick(prod.id)} >
+                    <div onClick ={()=>onClick(prod)} >
                         <GridRow>
                             <GridColumn>
                                 <img width = {80} height={80} src={prod.image}></img>
                             </GridColumn>
+                            {prod.id}
                             <GridColumn>
                                 <h6 style={{fontSize: 24}}>{prod.name}   </h6> <br/>
                                 

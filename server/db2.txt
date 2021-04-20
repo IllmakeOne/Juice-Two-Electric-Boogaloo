@@ -26,3 +26,19 @@ create table apps(
 id SERIAL NOT NULL PRIMARY KEY, 
 data json NOT NULL
 );
+
+create table apps(
+id SERIAL NOT NULL PRIMARY KEY, 
+date VARCHAR (15),
+data json NOT NULL
+);
+
+create table apps(
+id SERIAL NOT NULL PRIMARY KEY, 
+data json NOT NULL
+);
+
+create table appsly(
+id SERIAL NOT NULL PRIMARY KEY,
+data json NOT NULL
+);

@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { GridWrap, GridRow, GridColumn } from 'emotion-flex-grid'
-import { fetchApprow } from '../../../DBconn'
+import { getAppsByWeek,getWeeklyApps, getGhostAppsbyWeek } from '../../../DBconn'
 import Paper  from '@material-ui/core/Paper'
 
 import { makeStyles } from '@material-ui/core/styles'      
@@ -16,10 +16,12 @@ import { MyContext } from '../../../../App'
 import SticckyDateNames from '../pieces/shedspieces/SticckyDateNames'
 import FullColumn from '../pieces/shedspieces/FullColumn'
 
+
  
 
 const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
-    timeLight, setTimeLight, rowLight, setRowLight, variant}) => {
+    timeLight, setTimeLight, rowLight, setRowLight, variant, apps}) => {
+
     const cx = useContext(MyContext) 
 
     const C = useStyles()
@@ -62,10 +64,11 @@ const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
                     </GridColumn>
                 
                 <GridRow className={C.midrow} >
-                {week.map((el)=>{
+                {week.map((el, index)=>{
+                    const aux = apps.filter(a=>a.date == el[1] || a.date == (index +1))
                     return(
                         <ColumnDateField
-                            variant={variant}
+                            apps= {aux}
                             rowLight={rowLight}
                             date={el[1]}
                             name={el[0]}
@@ -73,6 +76,7 @@ const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
                             _mouseMove={onMouseclick}
                             onDubClick={onDubClick}
                             openShowApp={showapp}
+                            dayofWeek = {index}
                         />                     
                     )
                 })}

@@ -21,9 +21,19 @@ app.use('/prods', prods)
 const cart_lists = require('./routes/Cart_lists');
 app.use('/cart_lists', cart_lists)
 
+
+const bill = require('./routes/Bill');
+app.use('/bill', bill)
+
+const phones = require('./routes/PhoneNrs');
+app.use('/phones', phones)
+
+const apps = require('./routes/Appointments');
+app.use('/apps', apps)
+
+
+
 const port = 5000
-
-
 
 app.use((req, res, next)=>{
     //log(req, res)
