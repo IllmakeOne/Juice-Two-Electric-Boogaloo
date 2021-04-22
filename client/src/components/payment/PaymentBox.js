@@ -2,6 +2,8 @@ import Button from '@material-ui/core/Button'
 import { GridRow, GridColumn} from 'emotion-flex-grid'
 import {useState, useContext} from 'react'
 
+import { makeStyles } from '@material-ui/core/styles';
+
 import { GiCash } from "react-icons/gi";
 import { FiTrash2, FiSave, FiBookOpen} from "react-icons/fi"
 import { IoIosCash } from "react-icons/io"
@@ -10,9 +12,10 @@ import { GoCreditCard } from "react-icons/go"
 import OrangePaper from '../../containers/papers/OrangePaper'
 import PaymentDialogue from './PaymentDialogue';
 import { MyContext } from '../../App';
-function PaymentBox() {
+import { Paper } from '@material-ui/core';
 
-
+function PaymentBox({items}) {
+    const C = useStyles()
     const cx = useContext(MyContext)
     const decLg = (en, ro) => {
       if(cx.lg=='en')
@@ -21,147 +24,74 @@ function PaymentBox() {
           return ro
     }
     
-    const [open, setOpen] = useState(true)
-    const [variant, setVariant] = useState('')
+    const [open, setOpen] = useState({on: false, cc: 'cash'})
 
-    const items = [
-        {
-            name:'fanta',
-            price: 6,
-            stock: 1
-        },
-        {
-            name:'cola',
-            price: 6,
-            stock: 10
-        },
-        {
-            name:'apa',
-            price: 5,
-            stock: 5
-        },
-    ]   
+
+    // const items= [{name: 'juice', price: 6, stock: 3},{name: 'coffe', price: 6, stock: 1},{name: 'coffe', price: 6, stock: 1},{name: 'coffe', price: 6, stock: 1}]
+ 
     const getSumToal = () =>{
         var res = 0
         items.map(el => {
-            res+=el.price
+            res+=el.price*el.stock
         })
         return res
     }
 
+ 
+    
     const payCash = () =>{
+        setOpen({cc: 'cash', on: true})
 
     }
 
     const payCard = () =>{
-
+        setOpen({cc: 'card', on: true})
     }
 
-    const payMix = (cardam, casham) =>{
-
-    }
-
-    var recipt = 'CF^RO 123456\n'
-
-
-    /**
-     * 
-     * @param {*} items ={ name, price, stock}
-     */
-    const AddItemstoBill = (items) =>{
-        // S^ARTICOL 1^600^1000^buc^1^1
-        var ret = ''
-        items.forEach( item => {
-            ret +='S^' + item.name.toUpperCase() + '^'
-                + item.price*100 + '^'
-                + item.stock*1000 + '^'
-                + '1^1\n'
-        });
-        recipt += ret
-        // console.log(recipt)
-    }
-
-    /**
-     * cash is the cash amount paid
-     * card is the card amount paid
-     */
-    const AddPaymenttoBill = ({cash, card}) =>{
-        var ret = ''
-        if (cash != 0 )
-            ret += 'P^1^' + cash*100 + '\n'
-        if (card != 0 )
-            ret += 'P^2^' + card*100 + '\n'
-
-        recipt+=ret
-        // console.log(recipt)
-    }
-
-    const makeDummyRecipt = () =>{
-        AddItemstoBill(items)
-        AddPaymenttoBill({cash:19, card:10})
-        recipt+='ST^\nTL^\nTL^' //subtotal + empty row + empty row
-        console.log(recipt)
+    const payMix = () =>{
+        setOpen({cc: 'mix', on: true})
     }
 
     const closeDialogue = () =>{
-        setOpen(false)
+        setOpen({cc: '', on: false})
     }
 
     return (
-        <div>
-            <br/>
-            <br/>
-            <br/>
-            <div className='payment_box'>
-                {getSumToal()}
+        <Paper className={C.box} >
+            <div className='sumtotal'>Total: {getSumToal()}</div>
 
-                <GridRow>
-                    <GridColumn width ={4}>
-                        <Button className = 'cart_svlist'
-                                variant="outlined" 
-                                color="primary"
-                                size="large"
-                                startIcon={<IoIosCash />}
-                                onClick={payCash}
-                                >
-                                Cash
-                        </Button>
-                    </GridColumn>
-                    <GridColumn width={4}>
-                        <Button className = 'cart_svlist'
+            <GridRow>
+                <GridColumn width ={12}>
+                    <Button className = 'cart_svlist'
                             variant="outlined" 
                             color="primary"
                             size="large"
-                            startIcon={<GoCreditCard />}
-                            onClick={payCard}
+                            startIcon={<IoIosCash />}
+                            onClick={payCash}
                             >
-                            Card
-                        </Button>
-                    </GridColumn>
-                    
-                    <GridColumn width={4}>
-                        <Button className = 'cart_svlist'
-                            variant="outlined" 
-                            color="primary"
-                            size="large"
-                            startIcon={<GiCash />}
-                            onClick={payMix}
-                            >
-                            C and C
-                        </Button>
-                    </GridColumn>
-                </GridRow>
+                            {decLg('Pay','Plateste')}
+                    </Button>
+                </GridColumn>
+            </GridRow>
 
+            <PaymentDialogue 
+                open = {open}
+                closeD = {closeDialogue}
+                items={items}
+            />  	
 
-                <PaymentDialogue 
-                    open = {open}
-                    variant ={variant}
-                    closeD = {closeDialogue}
-                />  	
-
-            </div>
-        </div>
+        </Paper>
     )
 }
 
+const useStyles = makeStyles({
+    box: {
+        margin: 5,
+        padding: 6,
+        textAlign: 'center',
+        width: '100%',
+        height : 100,
+        // border: 'solid'
+    },
+  });
 export default PaymentBox

@@ -54,6 +54,18 @@ export const getWeeklyApps = async (field) => {
     })
 }
 
+export const getSuppliers = async () => {
+    return axios({
+        method: 'get',
+        url: 'http://localhost:5000/restock/supps'
+      }).then(response => {
+        //   console.log(response.data)
+        // return []
+        return response.data.map(el => {return {...el.data, id: el.id}})
+    })
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------------  Add One   ----------------------------------------------//
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,14 +81,24 @@ export const addCartList = async (newprod) => {
     })
 }
 
-export const addItem = (newprod) =>{}
+export const addItem = (newprod) =>{
+     // console.log({items, cash, card})
+     axios({
+        method: 'post',
+        url: `http://localhost:5000/prods`,
+        data: newprod
+      }).then(response => {
+          console.log(response.data)
+        return response.data
+    })    
+}
 
-export const addBill = async (items, cash, card) => {
+export const addBill = async (bill) => {
     // console.log({items, cash, card})
     axios({
         method: 'post',
         url: `http://localhost:5000/bill/bar`,
-        data: {items, cash, card}
+        data: {bill: bill}
       }).then(response => {
           console.log(response.data)
         return response.data
@@ -102,6 +124,18 @@ export const addWeekAppointment = async (app) => {
         data: app
       }).then(response => {    
         console.log(response.data)
+        return response.data
+    })
+}
+
+
+export const addOneSupplier = async (newSup) => {
+    axios({
+        method: 'post',
+        url: `http://localhost:5000/restock/supps`,
+        data: newSup
+      }).then(response => {    
+        // console.log(response.data)
         return response.data
     })
 }
@@ -132,6 +166,23 @@ export const deleteCartList = async (id) => {
         return response.data
     })
 }
+
+export const deleteSupplier = async (id) => {
+    // console.log(newprod.fav)
+    axios({
+        method: 'delete',
+        url: `http://localhost:5000/restock/supps/${id}`
+      }).then(response => {
+        return response.data
+    })
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//---------------------------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 export const switchKeyAssignment = async (newKey) => {
@@ -180,6 +231,17 @@ export const unlockKey = async (key) => {
       //TODO!!
       //in the server this should also release the key from the cient
       //and check out the client from the 
+}
+
+export const putOneSupplier = async (newSup) => {
+    axios({
+        method: 'put',
+        url: `http://localhost:5000/restock/supps/${newSup.id}`,
+        data: newSup
+      }).then(response => {    
+        // console.log(response.data)
+        return {...response.data[0].data,id: response.data[0].id }
+    })
 }
 
 export const getSpecificKey =  async (keyId) => {
@@ -281,11 +343,6 @@ export  const fetchKeys = async () => {
     return data
 }
 
-export const fetchSuppliers = async () => {
-    const res = await fetch('http://localhost:3001/suppliers')
-    const data = await res.json()
-    return data
-}
 
 
 export  const fetchApprow = async () => {

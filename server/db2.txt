@@ -42,3 +42,8 @@ create table appsly(
 id SERIAL NOT NULL PRIMARY KEY,
 data json NOT NULL
 );
+
+create table suppliers(
+id SERIAL NOT NULL PRIMARY KEY,
+data json NOT NULL
+);

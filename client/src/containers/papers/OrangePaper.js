@@ -2,7 +2,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 
-function OrangePaper({children, height}) {
+function OrangePaper({children, height, width}) {
     
 const useStyles = makeStyles({
 
@@ -12,6 +12,7 @@ const useStyles = makeStyles({
         width:  600,
         padding: 15,
         height: height==undefined?'500px':height,
+        width: width==undefined?'600px':width,
         overflow: 'auto',
     },
   });

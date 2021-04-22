@@ -31,6 +31,10 @@ app.use('/phones', phones)
 const apps = require('./routes/Appointments');
 app.use('/apps', apps)
 
+const suppliers = require('./routes/Restock');
+app.use('/restock', suppliers)
+
+
 
 
 const port = 5000

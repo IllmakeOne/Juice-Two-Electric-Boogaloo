@@ -1,32 +1,53 @@
 const db = require('../db')
 const express = require("express")
 const app = express()
+
+const testFolder = './billtest/'
 const fs = require('fs')
 
+// fs.unlink('file.txt', (err) => {
+//     if (err) {
+//         throw err;
+//     }
+
+//     console.log("File is deleted.");
+// });
 
 
-const generateRecepit = (items, cashAmunt,cardAmount)=>{
-    var recipt = 'CF^RO 123456\n'
-    items.forEach( item => {
-        recipt +='S^' + item.name + '^'
-            + item.price*100 + '^'
-            + item.stock*1000 + '^'
-            + '1^1\n'
-    })
-    if (cashAmunt != 0 )
-        recipt += 'P^1^' + cashAmunt*100 + '\n'
-    if (cardAmount != 0 )
-        recipt += 'P^2^' + cardAmount*100 + '\n'
-    recipt+='ST^\nTL^\nTL^' //subtotal + empty row + empty row
-    return recipt
+const readFoder = ()=>{
+    fs.readdirSync(testFolder).forEach(file => {
+        console.log(file)
+        readFile(file)
+        deleteFile(file)
+      })
 }
+
+setInterval(readFoder, 50);
+
+const deleteFile = (file) =>{
+    const aux = testFolder + file
+    // console.log(aux)
+    fs.unlinkSync(aux)
+}
+
+const readFile = (file) =>{
+    const aux = testFolder + file
+    fs.readFile(aux, 'utf8', (err, data)=>{
+        if(err){
+            return console.log(err)
+        }
+        console.log(data)
+    })
+
+}
+
 
 app.post('/bar', async(req, res) =>{
     console.log(req.body)
-    const prods = req.body.items 
-    const card = req.body.card
-    const cash = req.body.cash
-    const result = generateRecepit(prods, cash, card)
+    // const prods = req.body.items 
+    // const card = req.body.card
+    // const cash = req.body.cash
+    const result = req.body.bill
     // try{
     // dbCall = await db.querry(`UPDATE prods SET data = '${JSON.stringify(prod)}' WHERE id=${prod.id} RETURNING *`)
     // // console.log(dbCall)
@@ -35,14 +56,13 @@ app.post('/bar', async(req, res) =>{
     // }
 
     // write to a new file named 2pac.txt
-    fs.writeFile('C:/Fraps/HELP/bon.txt', result, (err) => {
+    const aux = testFolder + 'bon.txt'
+    fs.writeFile(aux, result, (err) => {
         // throws an error, you could also catch it here
         if (err) throw err;
-
-        // success case, the file was saved
         console.log('bill saved');
     });
-    res.status(200).send({data:result})
+    res.status(200).send({data: 'posted'})
 })
 
 

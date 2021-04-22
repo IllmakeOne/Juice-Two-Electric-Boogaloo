@@ -50,7 +50,7 @@ export default function MyDrawer(){
   const classes = drawerStyles();
 
   const cx = useContext(MyContext) //cx for context
-  
+
   const [stockOpen, setStockOpen] = useState(false)
   const openStockmenu = () =>{
     setStockOpen(!stockOpen)

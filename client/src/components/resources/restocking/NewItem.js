@@ -205,7 +205,7 @@ const emptyItem = {
     type: '',
     vat: '',
     price: 0,
-    stock: 0,
+    stock: 10, //to be changed~~!!!!!!!!!!!!!!!!!~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!!
     fixedPrice: true, 
     fav: false,
     image: '',

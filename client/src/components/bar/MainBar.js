@@ -41,10 +41,10 @@ function MainBar({startScreen}) {
                     return <div> 
                             {bar ? <div>
                                 <GridRow wrap='wrap' >
-                                    <GridColumn width={9}>
+                                    <GridColumn width={9.5}>
                                          <ProdSet items = {bar.prods} onClick = {addtoCart} changeFav ={changeFav}/>
                                     </GridColumn>
-                                    <GridColumn width={3} className='test'>
+                                    <GridColumn width={2.5} className='test'>
                                         <Cart  basket = {bar.cart} 
                                             removeItem = {removeItemfromCart}
                                             removeAllCart = {removeAllCart} 

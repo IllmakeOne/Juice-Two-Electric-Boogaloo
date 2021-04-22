@@ -20,6 +20,7 @@ import { GridWrap, GridRow, GridColumn } from 'emotion-flex-grid'
 import RecCartButton from './RecCartButton'
 import { MyContext } from '../../../App';
 import { formatDate } from '../../rec/schedules/pieces/DatesMethods';
+import PaymentBox from '../../payment/PaymentBox';
 
 function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
 
@@ -101,8 +102,7 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
 
     
     return (
-        <div >
-
+        <div className='cart'>
         <MyDialogue 
             prodLists={prodLists}
             open={open} 
@@ -112,7 +112,6 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
         />
 
             
-        <div className='cart'>
             {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Open simple dialog
             </Button> */}
@@ -153,42 +152,41 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
              </Button>
             </GridColumn>
         </GridRow>
-             <h2>Cart Items</h2>
-            <Paper style={{maxHeight: 550, overflow: 'auto'}} >
-            <div className ={css`
-                    padding: 12px;
-                    background-color: white;
-                    font-size: 24px;
-                    height: 100%;
-                    border-radius: 4px;
-                    white-space: nowrap;
-                    `}>
-               {basket.map((item) => 
-                ( 
-                <div key = {item.id} className ='cartbutton' 
-                    >
-                    <CartButton item = {item} 
-                        removeItem = {removeItem}
-                        changeItem = {changeItem}/>
-                </div>            
-                )) 
-            }
-             </div>
-        </Paper>
-        
+        <GridRow>
+            <GridColumn>
+                <h2>Cart Items</h2>
+                <Paper style={{maxHeight: 550, overflow: 'auto'}} >
+                    <div className ={css`
+                            padding: 12px;
+                            background-color: white;
+                            font-size: 24px;
+                            height: 100%;
+                            border-radius: 4px;
+                            white-space: nowrap;
+                            `}>
+                    {basket.map((item) => 
+                        ( 
+                        <div key = {item.id} className ='cartbutton' 
+                            >
+                            <CartButton item = {item} 
+                                removeItem = {removeItem}
+                                changeItem = {changeItem}/>
+                        </div>            
+                        )) 
+                    }
+                    </div>
+                </Paper>
+            </GridColumn>
+        </GridRow>
+        <GridRow>
+            <GridColumn>
+                <PaymentBox items= {basket} />
+            </GridColumn>   
+        </GridRow>
+        {/*
         <div className='finalbasket'>
             <h2>Finish total: {getSum()} lei</h2>
         </div>
-            {/* <Button 
-                className='finalbasket'
-                variant="contained"
-                color='green'
-                size="large"
-                startIcon={<FiShoppingCart />}
-                // onClick ={()=>removeItem(item.id)}
-                >
-            </Button> */}
-        <GridRow>
             <GridColumn width ={4}>
                 <Button className = 'cart_svlist'
                         variant="outlined" 
@@ -225,7 +223,7 @@ function Cart({basket, removeItem ,removeAllCart, changeItem, addBulkItem}) {
             </GridColumn>
         </GridRow>
 
-        </div>  
+        </div>  */}
         </div> 
     )
 }

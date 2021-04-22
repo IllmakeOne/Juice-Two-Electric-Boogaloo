@@ -2,23 +2,44 @@ const db = require('../db');
 const express = require("express");
 const app = express();
 
-app.get('/suppliers', async(req, res) => {
-    const dbCall = await db.querry('select * from suppliers')
-    res.status(200).send(JSON.parse(dbCall.rows))
-    // console.log(dbCall)
+
+const addSupplier = async (supp) =>{
+    const qury = `INSERT INTO suppliers (data) VALUES ('${JSON.stringify(supp)}')`
+    const dbCall = await db.querry(qury)
+    return dbCall
+}
+
+app.get('/supps', async(req, res) => {
+    const qurey = `SELECT * FROM suppliers `
+    const dbCall = await db.querry(qurey)
+    res.status(200).send(dbCall.rows)
 })
 
-app.post('suppliers', async(req, res) =>{
-    var inKeys = JSON.parse(req.query.data)
-    var rett =[]
-    const postSuppliers =  async (nSupplier)=>{
-        const dbCall = await db.querry(`INSERT INTO suppliers VALUES (${JSON.stringify(nSupplier)})`)
-        return dbCall
-    }
-    inKeys.map(el => {
-        rett.push(postSuppliers(el))
-    })
-    res.status(200).send(rett)
+app.post('/supps', async(req, res) => {
+    var inSup = req.body
+    var result = addSupplier(inSup) 
+    res.status(200).send(result)
 })
+
+app.put('/supps/:id', async(req, res) =>{
+    var supplr = req.body
+    var dbCall
+    try{
+    dbCall = await db.querry(`UPDATE suppliers SET data = '${JSON.stringify(supplr)}' WHERE id=${supplr.id} RETURNING *`)
+    // console.log(dbCall)
+    }catch(error){
+        console.log(error)
+    }
+    // console.log(dbCall.rows)
+    res.status(200).send(dbCall.rows)
+})
+
+app.delete('/supps/:id', async(req, res) => {
+    const qury = `DELETE FROM suppliers WHERE id=${req.params.id}`
+    const dbCall = await db.querry(qury)
+    res.status(200).send(dbCall)
+})
+
+
 
 module.exports = app

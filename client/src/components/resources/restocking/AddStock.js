@@ -2,10 +2,13 @@ import { useState, useEffect, useContext} from 'react'
 import MainBar from '../../bar/MainBar'
 // import {Autocomplete} from '@material-ui/lab';
 // import { Table } from 'react-bootstrap'
-import { Button, Input, TextField } from '@material-ui/core';
+
+import TextField from '@material-ui/core/TextField'
+import Input from '@material-ui/core/Input'
+import Button from '@material-ui/core/Button'
 import { DataGrid } from '@material-ui/data-grid'
 import { FiCheckSquare } from 'react-icons/fi';
-import { fetchProds, fetchSuppliers } from '../../DBconn';
+import { fetchProds, getSuppliers    } from '../../DBconn';
 import { Autocomplete } from '@material-ui/lab';
 
 import InputLabel from '@material-ui/core/InputLabel';
@@ -90,7 +93,7 @@ const  AddStock = () => {
     useEffect(() =>{
         const getProds = async () => {
             const serverProds = await fetchProds()
-            const serverSuppliers = await fetchSuppliers()
+            const serverSuppliers = await getSuppliers()
 
             setSuppliers(serverSuppliers)
 

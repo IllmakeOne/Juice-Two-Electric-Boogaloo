@@ -3,7 +3,7 @@ const express = require("express")
 const app = express()
 
 
-const addClient =  async (prod)=>{
+const addProduct =  async (prod)=>{
     // console.log(prod)
     const qury = `INSERT INTO prods (data) VALUES('${JSON.stringify(prod)}')`
     // console.log(qury)
@@ -41,29 +41,29 @@ app.put('/:id', async(req, res) =>{
     res.status(200).send(dbCall.rows)
 })
 
-// app.post('/:id', async(req, res) =>{
-//     var inProd = req.body
-//     // console.log(inProds)
-//     const dbCall = await db.querry(`UPDATE prods SET fav=${inProd.fav} WHERE id=${req.params.id}`)
-//     res.status(200).send(dbCall)
-// })
-
-
-
-app.post('/fill', async(req, res) =>{
-    var inProds = req.body
+app.post('/', async(req, res) =>{
+    var inProd = req.body
     // console.log(inProds)
-    if (typeof inProds == Array){
-        var rett =[]
-        inProds.map(async el => {
-            try{rett.push(addClient(el))}catch(e){console.log(e)}
-            })
-            res.status(200).send(rett)
-    } else {
-        try{
-        const aux = addClient(inProds)
-        res.status(200).send(aux)}catch(e){console.log(e)}
-    }
+    const dbCall = addProduct(inProd)
+    res.status(200).send(dbCall)
 })
+
+
+
+// app.post('/fill', async(req, res) =>{
+//     var inProds = req.body
+//     // console.log(inProds)
+//     if (typeof inProds == Array){
+//         var rett =[]
+//         inProds.map(async el => {
+//             try{rett.push(addClient(el))}catch(e){console.log(e)}
+//             })
+//             res.status(200).send(rett)
+//     } else {
+//         try{
+//         const aux = addClient(inProds)
+//         res.status(200).send(aux)}catch(e){console.log(e)}
+//     }
+// })
 
 module.exports = app

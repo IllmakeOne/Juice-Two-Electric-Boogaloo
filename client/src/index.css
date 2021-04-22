@@ -17,7 +17,7 @@
 .payment_box {
     margin: 20;
     text-align: center;
-    width: 200;
+    width: 400;
     height : 100;
 }
 
@@ -279,12 +279,25 @@ h5 {
 h6 {
   color: rgb(255, 170, 86);
   font-size: 30px;
+  width: 100%;
+}
+
+.sumtotal {
+  color: white;
+  font-size: 25px;
+  background-color: #fdc27e;
+  font-weight: 500;
 }
 
 .ScreenElement {
   position: absolute;
   left: 12%;
   top: 8%;
+}
+
+.finalButton {
+  background-color: #7cfc9a;
+  text-transform: none;
 }
 
 
@@ -324,6 +337,8 @@ footer {
   border: 'solid';
   
 }
+
+
 
 .highlitedField {
   background-color: #ffbae4;
