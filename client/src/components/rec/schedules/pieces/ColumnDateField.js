@@ -18,7 +18,7 @@ import  {getCrtWeek, getNextWeek } from '../pieces/DatesMethods'
 const dayLenght = 38
 
 function ColumnDateField({apps, date,name, field, _mouseMove, onDubClick, 
-                        rowLight, openShowApp, dayofWeek}) {
+                        rowLight, openShowApp}) {
     const C = useStyles()
     // console.log(apps)
 
@@ -26,7 +26,7 @@ function ColumnDateField({apps, date,name, field, _mouseMove, onDubClick,
         var res = 0
         var i 
         for(i = timestart ; i < (38-timestart);i++){
-            const nextone=apps.filter(el => el.field == court).filter(el => el.time==i)
+            const nextone=apps.filter(el => el.time==i)
             if (nextone.length != 0){
                 return res
             }

@@ -4,7 +4,7 @@ import { useState, useEffect, useContext} from 'react'
 
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 
-import { getappsClients } from '../../../DBconn'
+// import { getappsClients } from '../../../DBconn'
 import TextField from '@material-ui/core/TextField'
 
 
@@ -15,8 +15,8 @@ function PickClinetandNr( upClient, newClient) {
     const [clients, setClients] = useState([])
     useEffect(()=>{
         const getClient = async ()=>{
-            const serverClts = getappsClients()
-            setClients(serverClts)
+            // const serverClts = getappsClients()
+            // setClients(serverClts)
         }
         getClient()
     },[])

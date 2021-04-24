@@ -28,7 +28,7 @@ const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
 
     const week = getWeek(today,weekMutiplier, cx.lg)
 
-    const onMouseclick = (id) => {
+    const _mouseMove = (id) => {
         setTimeLight(id)
     }
 
@@ -49,6 +49,58 @@ const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
         setRowLight(aux<0?-1:aux)
     }
 
+    const getmaxappLengh = (timestart, court, lineapps) => {
+        var res = 0
+        var i 
+        for(i = timestart ; i < (38-timestart);i++){
+            const nextone=lineapps.filter(el => el.time==i)
+            if (nextone.length != 0){
+                return res
+            }
+            res++
+        }
+        return res
+    }
+
+    const generateLine = (lineapps, date) => {
+        var ret = []
+        var i
+        for ( i = 0;i < dayLenght ; i++){
+            const aux = lineapps.filter(el => el.time==i)
+            // console.log(aux)
+            if (aux.length != 0){
+                // if (false){
+                const el = aux[0]
+                
+                i+= el.duration
+
+                const height = (el.duration +1) * 25
+                ret.push(
+                    <Paper elevation={3} style={{height:height }} 
+                        onClick={()=>_mouseMove(el.time)}
+                        onDoubleClick={()=>(showapp(el))}
+                        >
+                        <FullCell app={el} />
+                    </Paper>)
+
+            } else {//if there is nothing scheudle for this hour
+                const auxi = i
+                const hilit = auxi==rowLight?'solid ':''
+                ret.push(
+                    <Paper 
+                        elevation={2} 
+                        onDoubleClick = {()=>onDubClick(auxi, date, field,getmaxappLengh(auxi, field, lineapps))}
+                        onClick={()=>_mouseMove(auxi)}
+                        style={{border: `2px ${hilit}#FFB231`, 
+                                margin: 0}}
+                        >
+                            <EmptyCell i={i}/> 
+                    </Paper>
+                    )
+            }
+        }
+        return ret
+    }
 
        return (
 
@@ -67,18 +119,33 @@ const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
                 {week.map((el, index)=>{
                     const aux = apps.filter(a=>a.date == el[1] || a.date == (index +1))
                     return(
-                        <ColumnDateField
-                            apps= {aux}
-                            rowLight={rowLight}
-                            date={el[1]}
-                            name={el[0]}
-                            field={field} 
-                            _mouseMove={onMouseclick}
-                            onDubClick={onDubClick}
-                            openShowApp={showapp}
-                            dayofWeek = {index}
-                        />                     
+                        <GridColumn width={12/7} className = {C.column}> 
+                        
+                            <Paper elevation={3} className={C.daynameCell}>
+                                {el[0]}<br/>{el[1]}
+                            </Paper> 
+                            {generateLine(aux, el[1])}
+                        
+                            <Paper elevation={3} className={C.daynameBottom}>
+                                    {el[1]}
+                            </Paper>  
+            
+                        </GridColumn>   
                     )
+                    // const aux = []
+                    // return(
+                    //     <ColumnDateField
+                    //         apps= {aux}
+                    //         rowLight={rowLight}
+                    //         date={el[1]}
+                    //         name={el[0]}
+                    //         field={field} 
+                    //         _mouseMove={onMouseclick}
+                    //         onDubClick={onDubClick}
+                    //         openShowApp={showapp}
+                    //         dayofWeek = {index}
+                    //     />                     
+                    // )
                 })}
                 </GridRow>
 
@@ -93,11 +160,6 @@ const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
         </div>
        )
 }
-
-
-
-
-
 
 
 
@@ -169,7 +231,34 @@ const useStyles = makeStyles({
         position: 'sticky',
         top: 73,
 
-    }
+    },
+
+    lit:{
+        border: 5,
+        borderColor: 'yellow',
+        background: 'red',
+    },
+    column:{
+        margin: 3,
+    },
+    daynameCell:{
+        background: '#0cbff5',    
+        height: 60,   
+        textAlign: 'center',
+        fontSize: 23,
+
+        position: 'sticky',
+        top: 73,
+    },
+
+    daynameBottom:{
+        background: '#0cbff5',    
+        height: 30,   
+        textAlign: 'center',
+        fontSize: 23,
+        position: 'sticky',
+        bottom: 5,
+    },
   });
 
   const dayLenght = 38 //it is counted in half hours 

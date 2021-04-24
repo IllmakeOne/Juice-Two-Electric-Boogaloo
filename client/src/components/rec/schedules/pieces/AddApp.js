@@ -27,7 +27,7 @@ import PickDate from './PickDate';
 import PickField from './PickField'
 import OrangePaper from '../../../../containers/papers/OrangePaper'
 import ShowAppointment from '../../../../containers/appointments/ShowAppointment'
-import PickClinetandNr from './PickClinetandNr'
+// import PickClinetandNr from './PickClinetandNr'
 
 import {formatDate} from './DatesMethods'
 import PickNamePhone from '../../../../containers/inputs/PickNamePhone'
@@ -48,20 +48,20 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
         else
             return ro
     }
-
-    const topSetDate = (date)=>{
-        setCrtApp({...crtApp, date: formatDate(date)})
-    }
-
     
     const [crtApp, setCrtApp]= useState(defaultApp)
 
     // useEffect(()=>{console.log(crtApp)},[crtApp])
 
     const changeAppStatus = e => {
-        console.log(e.target.value)
+        // console.log(e.target.value)
         setCrtApp({...crtApp, status: e.target.value})
     }
+
+    const changeComment = e => {
+        // console.log(e.target.value)
+        setCrtApp({...crtApp, cmm: e.target.value})
+    } 
 
     const handleClose = () => {
         closeAppDialog()
@@ -71,7 +71,9 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
         closeAppDialog()
         const weekly = (crtApp.status == 'corp' ||  crtApp.status == 'tr' ||  crtApp.status == 'sub')
         const datey = weekly == true ? getDayofWeel(info.date): info.date
-        pushtoDB({...crtApp, date: datey, field: info.field, time: info.time, weekly: weekly})
+        const newApp = {...crtApp, date: datey, field: info.field, time: info.time, weekly: weekly}
+        // console.log(newApp)
+        pushtoDB(newApp)
         setCrtApp(defaultApp)
     }
 
@@ -97,18 +99,40 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
                 {PickFieldRow()}
                 {PickTimeRow()}
                 {PickDurationRow()}
+                {writeComment()}
                 {/* <PickClinetandNr /> */}
             </div>
+        )
+    }
+
+    const writeComment = () =>{
+        return (
+            <GridRow>
+                <GridColumn p='s' align='center' width={3.5}>
+                    <h3>{decLg('Comment: ','Observatie: ')}</h3>
+                </GridColumn>
+                <GridColumn m='s'>
+                    <TextField
+                        id="outlined-multiline-static"
+                        // label="Multiline"
+                        multiline
+                        style={{width: '100%'}}
+                        rows={3}
+                        onChange={changeComment}
+                        variant="outlined"
+                        />
+                </GridColumn>
+            </GridRow>
         )
     }
 
     const PickHourRow = () => {
         return(
             <GridRow>
-                <GridColumn p='m' align='center' width={5}>
+                <GridColumn p='s' align='center' width={5}>
                     <h3>{decLg('Appointment date: ','Data Rezervarii:')}</h3>
                 </GridColumn>
-                <GridColumn m='m'>
+                <GridColumn m='s'>
                     {/* {console.log(info)} */}
                     <h3>{info.date}</h3>{/* maybe make this prettier */}
                     {/* <PickDate date={crtApp.date} changeDate={topSetDate} /> */}
@@ -124,10 +148,10 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
     const PickName = () =>{
         return(
             <GridRow>
-                <GridColumn p='m' align='center' width={5}>
+                <GridColumn p='s' align='center' width={5}>
                     <h3>{decLg('Clinet Name and Phone: ','Nume si Telefon Client:')}</h3>
                 </GridColumn>
-                <GridColumn  p='m' align='center' width={5}>
+                <GridColumn  p='s' align='center' width={5}>
                     <PickNamePhone setNamePhone={setNameandPhone}/>
                 </GridColumn>
             </GridRow>
@@ -137,10 +161,10 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
     const PickAppTypeRow = () => {
         return(
             <GridRow>
-                <GridColumn p='m' align='center' width={5}>
+                <GridColumn p='s' align='center' width={5}>
                     <h3>{decLg('Appointment Type: ','Tip Rezervare:')}</h3>
                 </GridColumn>
-                <GridColumn>
+                <GridColumn p='s'  align='center' width={5}>
                     <FormControl >
                         <InputLabel >{decLg('Appointment Type','Tip Rezervare')}</InputLabel>
                         <Select
@@ -163,10 +187,10 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
     const PickFieldRow = () => {
         return(
             <GridRow>
-                <GridColumn p='m' align='center' width={5}>
+                <GridColumn p='s' align='center' width={5}>
                     <h3>{decLg('Pick Field: ','Alege Teren:')}</h3>
                 </GridColumn>
-                <GridColumn m='m'>
+                <GridColumn m='s'>
                     <PickField field={info.field} />
                 </GridColumn>
             </GridRow>
@@ -176,10 +200,10 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
     const PickTimeRow = () => {
         return(
             <GridRow>
-                <GridColumn p='m'  align='center' width={5}>
+                <GridColumn p='s'  align='center' width={5}>
                     <h3>{decLg('Appointment Time: ','Ora Rezervarii:')}</h3>
                 </GridColumn>
-                <GridColumn m='m'>
+                <GridColumn m='s'>
                     <h3>{tymes[info.time]}</h3>
                 </GridColumn>
             </GridRow>
@@ -195,10 +219,10 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
     const PickDurationRow = () => {
         return(
             <GridRow>
-                <GridColumn p='m' align='center' width={5}>
+                <GridColumn p='s' align='center' width={5}>
                     <h3>{decLg('Pick appointment duration:','Alege durata rezervarii:')}</h3>
                 </GridColumn>
-                <GridColumn m='m'>
+                <GridColumn m='s'>
                     <FormControl align='center'>
                             <InputLabel >{decLg('Apointment Duration','Lungime Rezervare')}</InputLabel>
                             <Select
@@ -263,7 +287,7 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
                             {decLg('Cancel', 'Anuleaza')}
                         </h3>
                 </Button>
-                <Button  style ={{textTransform: 'none', background: '#7cfc9a'}} color="primary" variant="outlined"  onClick={makeAppointment}>{/*type="submit" */}
+                <Button  style ={{textTransform: 'none', background: '#7cfc9a'}} color="primary" variant="outlined"  onClick={()=>makeAppointment()}>{/*type="submit" */}
                         <h3>
                             {decLg('Create Appointmen', 'Creaza rezerare')}
                         </h3>

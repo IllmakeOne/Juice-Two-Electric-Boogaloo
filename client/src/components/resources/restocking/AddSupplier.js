@@ -17,6 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import OrangePaper from '../../../containers/papers/OrangePaper'
+import { EditSharp } from '@material-ui/icons'
 
 
 const emptySup = {id: 0, name: '', cui: '', orc: '', address: '',bank: '', iban: '', bkaddr: ''}
@@ -171,14 +172,8 @@ const columns = [
 
         putOneSupplier(editSup)
 
-        const auxsus = supps
-        auxsus.map(el=>{
-            if(el.id == editSup.id){
-                console.log(el)
-                console.log(editSup)
-                el = editSup
-                console.log(el)
-            }})
+        const auxsus = supps.filter(el=> el.id != editSup.id)
+        auxsus.push(editSup)
         setSupps(auxsus)
         setEditSup(emptySup)
     }
@@ -187,14 +182,14 @@ const columns = [
     
         return (
     <div className= 'ScreenElement'>
-        <GridRow>
+        {/* <GridRow>
             <OrangePaper width={1500}>
 
             </OrangePaper>
-        </GridRow>
-            <OrangePaper width={1500} >
+        </GridRow> */}
+            <OrangePaper width={1500} height= {700} >
         <GridRow > 
-            <GridColumn m = 'l'>
+            <GridColumn m = 'l' width={2}>
                 <form className='add-form-supplier' onSubmit={onSubmit}>
                     <div className='form-control'>
                         <label>{declg('Name','Nume')}</label>
@@ -271,7 +266,7 @@ const columns = [
                 </form>        
             </GridColumn>   
 
-            <GridColumn width = {6} style ={{width: 800}} m = 'l'>
+            <GridColumn width = {8}  m = 'l'>
                 <DataGrid rows={supps} columns={columns} pageSize={5} />
             </GridColumn>
             <GridColumn m = 'l'>

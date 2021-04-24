@@ -31,7 +31,6 @@ const ProdButton = ({prod, onClick, className, changeFav}) => {
                             <GridColumn>
                                 <img width = {80} height={80} src={prod.image}></img>
                             </GridColumn>
-                            {prod.id}
                             <GridColumn>
                                 <h6 style={{fontSize: 24}}>{prod.name}   </h6> <br/>
                                 

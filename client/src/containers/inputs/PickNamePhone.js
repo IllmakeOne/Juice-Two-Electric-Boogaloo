@@ -34,7 +34,7 @@ const PickNamePhone=({setNamePhone}) => {
 
     const setName = (newName) =>{
         setCrtPhone(newName)
-        console.log(newName)
+        // console.log(newName)
         setNamePhone(newName)
     }
 
@@ -64,14 +64,11 @@ const PickNamePhone=({setNamePhone}) => {
                 value={crtPhone}
                 onChange={(event, newValue) => {
                     if ( newValue == null) {
-                        console.log('I   ' + JSON.stringify(newValue))
                         setName(emptyPhone)
                     } else if (newValue && newValue.inputValue) {
-                        console.log('I I    ' + JSON.stringify(newValue))
                         setOpen(true)
                         
                     } else {
-                        console.log('I I I   ' + JSON.stringify(newValue))
                         setName(newValue)
                     }
                 }}
@@ -86,7 +83,7 @@ const PickNamePhone=({setNamePhone}) => {
                         name: params.inputValue,
                         });
                     }
-                     console.log(filtered)
+                    //  console.log(filtered)
                     return filtered;
                 }}
                 //--------------------------------------------------------Filter ///-----------

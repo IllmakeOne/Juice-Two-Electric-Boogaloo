@@ -3,7 +3,7 @@ import ScheduleTabs from './pieces/ScheduleTabs'
 
 import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { getApps, getWeeklyApps, addWeekAppointment} from '../../DBconn'
+import { getApps, getWeeklyApps, addAppointment} from '../../DBconn'
 import { GridRow, GridColumn } from 'emotion-flex-grid'
 
 
@@ -54,40 +54,40 @@ function MainSche() {
     const [ocases, setOcases] = useState([])
     const [weeklies, setWeeklies] = useState([])
 
-    /*
+    const getaaaaaApps = async ()=>{
+        const thisweek = await getApps(crtField)
+        // console.log(thisweek)
+        setOcases(thisweek)
+    }
+    const getWApps = async ()=>{
+        const weeklys = await getWeeklyApps(crtField)
+        // console.log(weeklys)
+        setWeeklies(weeklys)      
+    }
+
+    
     useEffect(() => {
-        const getaaaaaApps = async ()=>{
-            const thisweek = await getApps(crtField)
-            console.log(thisweek)
-            setOcases(thisweek)
-        }
-        const getWApps = async ()=>{
-            const weeklys = await getWeeklyApps(crtField)
-            setWeeklies(weeklys)      
-        }
         getaaaaaApps()
         getWApps()
     }, [])
-    */
+    
 
-    /*
+    // useEffect(()=>{
+    //     console.log('ocas')
+    //     console.log(ocases)
+    // }, [ocases])
+
+    
+    // useEffect(()=>{
+    //     console.log('wikies')
+    //     console.log(weeklies)
+    // }, [weeklies])
+    
     useEffect(()=>{
-        const getaaaaaApps = async ()=>{
-            const thisweek = await getApps(crtField)
-            console.log('dab this week')
-            console.log(thisweek)
-            setOcases(thisweek)
-        }
-        const getWApps = async ()=>{
-            const weeklys = await getWeeklyApps(crtField)
-            console.log('dab weekly')
-            console.log(weeklys)
-            setWeeklies(weeklys)      
-        }
-    getaaaaaApps()
-    getWApps()
-    }, [crtField])
-    */
+        getaaaaaApps()
+        getWApps()
+    }, [crtField, today])
+    
 
 
     const changeToday = (newDate) =>{
@@ -133,19 +133,89 @@ function MainSche() {
         setShowAOpen(false)
     }
 
-    const addAppointmentDB = async (app) =>{
-        console.log(app)
-        const newapp = await addWeekAppointment(app)
-        // console.log(newapp)  
-        // if(newapp.weekly == false){
-        //     ocases.push(newapp)
-        //     setOcases(ocases)
-        // } else {
-        //     weeklies.push(newapp)
-        //     setWeeklies(weeklies)
-        // }
+    const deteleApp = (app) =>{
+        // TODO
     }
 
+    const combineWeeks = () =>{
+        var res = []
+        ocases.map(el =>{
+            res.push({duration: el.duration, time: el.time,
+                  field: el.field, date: el.date, comment: el.comment,
+                  name: el.name, phone:el.phone, status: el.status
+                })
+        })
+        weeklies.map(el =>{
+            res.push({duration: el.duration, time: el.time,
+                  field: el.field, date: el.date, comment: el.comment,
+                  name: el.name, phone:el.phone, status: el.status
+                })
+        })
+        // console.log(res)
+        return res
+    }
+
+    const addAppointmentDB = (app) =>{
+
+         if(app.weekly){
+            const aux = JSON.parse(JSON.stringify(weeklies))
+            aux.push(app)
+            setWeeklies(aux)
+        } else {
+            const aux = JSON.parse(JSON.stringify(ocases))
+            aux.push(app)
+            setOcases(aux)       
+        }
+
+        const Anon = async (app) =>{
+            const newapp = await addAppointment(app)
+            return newapp
+        }
+        Anon(app)
+    }
+
+    const thisWeek = () =>{
+        var auxcocat = combineWeeks()
+        auxcocat = auxcocat.filter(el=>el.status != 'cw' && el.status!= 'acc')
+        // console.log(auxcocat)
+        return (
+            <WeekSchedule 
+                variant='all'
+                apps = {auxcocat}
+                field = {crtField} 
+                today = {today}
+                weekMutiplier = {weekMutiplier}
+                setDialog = {openAppDialog}
+                openShowApp = {openShowApp}
+                
+                setTimeLight={changeTimeLight}
+                timeLight={timeLight}
+                setRowLight={changeRowLight}
+                rowLight={rowLight}
+            />
+        )
+    }
+    const thisWeekGhost = () =>{
+        var auxcocat = combineWeeks()
+        auxcocat= auxcocat.filter(el=> el.status == 'cw' || el.status == 'acc')
+        // console.log(auxcocat)
+        return (
+            <WeekSchedule 
+                variant='dummy'
+                apps = {auxcocat}
+                field = {crtField} 
+                today = {today}
+                weekMutiplier = {weekMutiplier}
+                setDialog = {openAppDialog}
+                openShowApp = {openShowApp}
+                
+                setTimeLight={changeTimeLight}
+                timeLight={timeLight}
+                setRowLight={changeRowLight}
+                rowLight={rowLight}
+                />
+        )
+    }
     return (
         <div className='cart_svlist' >
         <br/>
@@ -162,20 +232,7 @@ function MainSche() {
                 />
 
 
-            <WeekSchedule 
-                variant='all'
-                apps = {ocases.filter(el=>el.status != 'cw' && el.status!= 'acc').concat(weeklies)}
-                field = {crtField} 
-                today = {today}
-                weekMutiplier = {weekMutiplier}
-                setDialog = {openAppDialog}
-                openShowApp = {openShowApp}
-                
-                setTimeLight={changeTimeLight}
-                timeLight={timeLight}
-                setRowLight={changeRowLight}
-                rowLight={rowLight}
-                />
+           {thisWeek()}
 
             <FieldAndDateChanger 
                 changeField = {chageField}
@@ -185,20 +242,7 @@ function MainSche() {
                 changeToday = {changeToday}
                 />
             
-            <WeekSchedule 
-                variant='dummy'
-                apps = {ocases.filter(el=> el.status == 'cw' || el.status == 'acc')}
-                field = {crtField} 
-                today = {today}
-                weekMutiplier = {weekMutiplier}
-                setDialog = {openAppDialog}
-                openShowApp = {openShowApp}
-                
-                setTimeLight={changeTimeLight}
-                timeLight={timeLight}
-                setRowLight={changeRowLight}
-                rowLight={rowLight}
-                />
+            {thisWeekGhost()}
 
 
             <AddApp 
@@ -212,6 +256,7 @@ function MainSche() {
                 open = {showAOpen} 
                 closeDummyAppDialog = {closeShowAopen}
                 app={appShow}
+                deteleApp= {deteleApp}
                 />
         </div>
     )

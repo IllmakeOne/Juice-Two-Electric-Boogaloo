@@ -5,11 +5,11 @@ const app = express()
 
 const addProduct =  async (prod)=>{
     // console.log(prod)
-    const qury = `INSERT INTO prods (data) VALUES('${JSON.stringify(prod)}')`
+    const qury = `INSERT INTO prods (data) VALUES('${JSON.stringify(prod)}') RETURNING *`
     // console.log(qury)
     const dbCall = await db.querry(qury)
     // console.log(dbCall)
-    return dbCall
+    return dbCall.rows[0]
 }
 
 app.get('/', async(req, res) => {
@@ -23,7 +23,7 @@ app.get('/', async(req, res) => {
 
 app.get('/:id', async(req, res) => {
   const dbCall = await db.querry(`SELECT * FROM prods WHERE id = ${req.params.id} `)
-  res.status(200).send(dbCall.rows)
+  res.status(200).send(dbCall.rows[0])
 //   console.log(dbCall)
 })
 
@@ -37,7 +37,7 @@ app.put('/:id', async(req, res) =>{
     }catch(error){
         console.log(error)
     }
-    console.log(dbCall.rows)
+    console.log(dbCall.rows[0])
     res.status(200).send(dbCall.rows)
 })
 

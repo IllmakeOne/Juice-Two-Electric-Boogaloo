@@ -12,25 +12,16 @@ const getNumberOfWeek = (firnatedDate) => {
 }
 
 const addApp = async (app) =>{
-    const qury = `INSERT INTO apps (data) VALUES ('${JSON.stringify(app)}')`
+    const qury = `INSERT INTO apps (data) VALUES ('${JSON.stringify(app)}') RETURNING *`
     const dbCall = await db.querry(qury)
-    return dbCall
+    return dbCall.rows[0]
 }
 const addWeeklyApp = async (app) =>{
-    console.lo
-    const qury = `INSERT INTO appsly (data) VALUES ('${JSON.stringify(app)}')`
+    const qury = `INSERT INTO appsly (data) VALUES ('${JSON.stringify(app)}') RETURNING *`
     const dbCall = await db.querry(qury)
-    return dbCall
+    return dbCall.rows[0]
 }
 
-
-
-
-app.get('/apps/:field', async(req, res) => {
-    const qurey = `SELECT * FROM apps WHERE data->>'field'='${req.params.field}'`
-    const dbCall = await db.querry(qurey)
-    res.status(200).send(dbCall.rows)
-})
 
 app.get('/weekly/:field', async(req, res) => {
     const qurey = `SELECT * FROM appsly WHERE data->>'field'='${req.params.field}'`
@@ -38,14 +29,22 @@ app.get('/weekly/:field', async(req, res) => {
     res.status(200).send(dbCall.rows)
 })
 
+app.get('/:field', async(req, res) => {
+    const qurey = `SELECT * FROM apps WHERE data->>'field'='${req.params.field}'`
+    const dbCall = await db.querry(qurey)
+    res.status(200).send(dbCall.rows)
+})
+
 app.post('/add', async(req, res) => {
     var inapp = req.body
+    // console.log(inapp)
     var result
     if(inapp.weekly == true){
-        result = addWeeklyApp(inapp)
+        result = await addWeeklyApp(inapp)
     } else {
-        result = addApp(inapp)
+        result = await addApp(inapp)  
     }  
+    // console.log(result)
     res.status(200).send(result)
 })
 

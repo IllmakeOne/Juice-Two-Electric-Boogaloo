@@ -35,9 +35,9 @@ export const getNameAndPhones = async () => {
 export const getApps = async (field) => {
     return axios({
         method: 'get',
-        url: `http://localhost:5000/apps/apps/${field}`
+        url: `http://localhost:5000/apps/${field}`
       }).then(response => {
-        //   console.log(response.data)
+        //   console.log(response.data.map(el => {return el.data}))
         // return []
         return response.data.map(el => {return el.data})
     })
@@ -48,7 +48,7 @@ export const getWeeklyApps = async (field) => {
         method: 'get',
         url: `http://localhost:5000/apps/weekly/${field}`
       }).then(response => {
-        //   console.log(response.data)
+        //   console.log(response.data.map(el => {return el.data}))
         // return []
         return response.data.map(el => {return el.data})
     })
@@ -106,25 +106,14 @@ export const addBill = async (bill) => {
 }
 
 export const addAppointment = async (app) => {
-    // console.log(newprod.fav)
-    axios({
-        method: 'post',
-        url: `http://localhost:5000/app/week`,
-        data: app
-      }).then(response => {
-          console.log(response.data)
-        return response.data.data
-    })
-}
-
-export const addWeekAppointment = async (app) => {
+    // console.log(app)
     axios({
         method: 'post',
         url: `http://localhost:5000/apps/add`,
         data: app
       }).then(response => {    
-        console.log(response.data)
-        return response.data
+        // console.log(response.data)
+        return response.data.data
     })
 }
 
@@ -252,13 +241,6 @@ export const getSpecificKey =  async (keyId) => {
       })
 }
 
-export const getappsClients =async () => {
-    return axios.get(`http://localhost:3001/phones`)
-         .then(function (response) {
-            // console.log(response.data)
-            return response.data
-      })
-}
 
 export const getSpecificClient = (clientId) => {
     return axios.get(`http://localhost:3001/clients?id=${clientId}`)
