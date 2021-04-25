@@ -24,7 +24,14 @@ const addWeeklyApp = async (app) =>{
 
 
 app.get('/weekly/:field', async(req, res) => {
-    const qurey = `SELECT * FROM appsly WHERE data->>'field'='${req.params.field}'`
+    var qurey
+    if(req.params.field == 'Tennis'){
+        qurey = `SELECT * FROM appsly WHERE data->>'field'='T1' OR data->>'field'='T2' OR data->>'field'='T3' `
+    } else if (req.params.field == 'Aerobic'){
+        qurey = `SELECT * FROM appsly WHERE data->>'field'='A1' OR data->>'field'='A2' OR data->>'field'='A3' `
+    } else {
+        qurey = `SELECT * FROM appsly WHERE data->>'field'='${req.params.field}'`
+    }
     const dbCall = await db.querry(qurey)
     res.status(200).send(dbCall.rows)
 })
@@ -55,6 +62,17 @@ app.post('/weekly', async(req, res) => {
     res.status(200).send(aux)
 })
 
+app.delete('/:id', async(req, res) => {
+    const qurey = `DELETE  FROM apps WHERE id = '${req.params.id}'`
+    const dbCall = await db.querry(qurey)
+    res.status(200).send(dbCall.rows)
+})
+
+app.delete('/weekly/:id', async(req, res) => {
+    const qurey = `DELETE  FROM appsly WHERE id = '${req.params.id}'`
+    const dbCall = await db.querry(qurey)
+    res.status(200).send(dbCall.rows)
+})  
 
 // app.get('/:id', async(req, res) => {
 //   const dbCall = await db.querry(`SELECT * FROM apps WHERE id = ${req.params.id} `)

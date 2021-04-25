@@ -39,7 +39,7 @@ export const getApps = async (field) => {
       }).then(response => {
         //   console.log(response.data.map(el => {return el.data}))
         // return []
-        return response.data.map(el => {return el.data})
+        return response.data.map(el => {return {...el.data, id: el.id}})
     })
 }
 
@@ -50,7 +50,7 @@ export const getWeeklyApps = async (field) => {
       }).then(response => {
         //   console.log(response.data.map(el => {return el.data}))
         // return []
-        return response.data.map(el => {return el.data})
+        return response.data.map(el => {return {...el.data, id: el.id}})
     })
 }
 
@@ -165,6 +165,27 @@ export const deleteSupplier = async (id) => {
         return response.data
     })
 }
+
+export const DeleteAppointment = async (id, weekly) => {
+    if(weekly){
+        return axios({
+             method: 'delete',
+             url: `http://localhost:5000/apps/weekly/${id}`
+           }).then(response => {
+             return response.data
+         })
+
+    } else {
+        return axios({
+             method: 'delete',
+             url: `http://localhost:5000/apps/${id}`
+           }).then(response => {
+             return response.data
+         })
+
+    }
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -306,13 +327,6 @@ export const getGhosttennis = async ({date}) => {
 
 //--------------------------Deletes----------------------
 
-export const DeleteAppointment = async ({app}) => {
-    // return axios.delete(`http://localhost:3001/apps/${app.id}`)
-    //      .then(function (response) {
-    //         // console.log(response.data)
-    //         return response.data
-    //   })
-}
 
 
 const API = 'http://localhost:3001/'

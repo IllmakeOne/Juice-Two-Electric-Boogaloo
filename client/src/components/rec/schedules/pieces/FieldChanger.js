@@ -8,9 +8,7 @@ function FieldChanger({ changeField}) {
 
     const cx = useContext(MyContext)
     const [crtField, setCrtField]= useState('Hall')
-    const fields =cx.lg=='en' ?
-             ['Hall', 'OutDoor', 'Tennis', 'Aerobic']:
-             ['Sala Polivalenta', 'Fotbal', 'Tenis', 'Aerobic']
+    const fields = ['Hall', 'OutDoor', 'Tennis', 'Aerobic']
 
     const changeCrtField = (field) => {
         setCrtField(field)

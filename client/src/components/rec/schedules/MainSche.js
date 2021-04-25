@@ -129,12 +129,21 @@ function MainSche() {
         setAppShow(app)
         setShowAOpen(true)
     }
-    const closeShowAopen= ()=>{
+    const closeShowAopen= () =>{
         setShowAOpen(false)
     }
 
-    const deteleApp = (app) =>{
+    const deteleApp = (id, weekly) =>{
         // TODO
+        if(weekly){
+            var aux = weeklies
+            aux = aux.filter(el => el.id!=id)
+            setWeeklies(aux)
+        } else {
+            var aux = ocases
+            aux = aux.filter(el => el.id!=id)
+            setOcases(aux)
+        }
     }
 
     const combineWeeks = () =>{
@@ -142,13 +151,15 @@ function MainSche() {
         ocases.map(el =>{
             res.push({duration: el.duration, time: el.time,
                   field: el.field, date: el.date, comment: el.comment,
-                  name: el.name, phone:el.phone, status: el.status
+                  name: el.name, phone:el.phone, status: el.status, id:el.id,
+                  weekly: el.weekly
                 })
         })
         weeklies.map(el =>{
             res.push({duration: el.duration, time: el.time,
                   field: el.field, date: el.date, comment: el.comment,
-                  name: el.name, phone:el.phone, status: el.status
+                  name: el.name, phone:el.phone, status: el.status, id:el.id,
+                  weekly: el.weekly
                 })
         })
         // console.log(res)

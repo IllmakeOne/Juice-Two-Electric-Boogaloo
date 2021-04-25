@@ -47,7 +47,9 @@ function AddDummyApp({open,closeDummyAppDialog, app, deteleApp}) {
     }
 
     const DellApp = () => {
-        DeleteAppointment(app)
+        console.log(app.weekly)
+        DeleteAppointment(app.id, app.weekly)
+        deteleApp(app.id, app.weekly)
         // console.log(app)
         closeDummyAppDialog()
         // if(checkOut(crtApp) == true){

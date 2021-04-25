@@ -64,6 +64,7 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
     } 
 
     const handleClose = () => {
+        setCrtApp(defaultApp)
         closeAppDialog()
     }
 
@@ -230,7 +231,7 @@ function AddApp({open,closeAppDialog, pushtoDB, info}) {
                                 value={crtApp.duration} 
                                 onChange={changeAppduration}
                                 >
-                                    {/* {console.log(tymes)} */}
+                                    {console.log(info.maxLenght)}
                                     {durations.slice(0,info.maxLenght).map((el, index)=>{
                                         return(
                                             <MenuItem value={index}>{el}</MenuItem>
@@ -322,6 +323,7 @@ const useStyles = makeStyles({
     duration: 0,
     time: 0,
     phone: '005',
+    comment: '',
 }
 const durations = [
     '30 min',

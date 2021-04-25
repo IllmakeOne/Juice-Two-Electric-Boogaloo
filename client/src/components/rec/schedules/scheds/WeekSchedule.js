@@ -50,9 +50,10 @@ const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
     }
 
     const getmaxappLengh = (timestart, court, lineapps) => {
+        console.log(lineapps)
         var res = 0
         var i 
-        for(i = timestart ; i < (38-timestart);i++){
+        for(i = timestart ; i < 38;i++){
             const nextone=lineapps.filter(el => el.time==i)
             if (nextone.length != 0){
                 return res
@@ -61,46 +62,177 @@ const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
         }
         return res
     }
+    const aerobicRooms =[
+        'A1',
+        'A2',
+        'A3'    
+    ]
+    const tennisCourts = [
+        'T1',
+        'T2',
+        'T3'
+    ]  
 
     const generateLine = (lineapps, date) => {
         var ret = []
+        // console.log(lineapps)
         var i
-        for ( i = 0;i < dayLenght ; i++){
-            const aux = lineapps.filter(el => el.time==i)
-            // console.log(aux)
-            if (aux.length != 0){
-                // if (false){
-                const el = aux[0]
-                
-                i+= el.duration
-
-                const height = (el.duration +1) * 25
-                ret.push(
-                    <Paper elevation={3} style={{height:height }} 
-                        onClick={()=>_mouseMove(el.time)}
-                        onDoubleClick={()=>(showapp(el))}
-                        >
-                        <FullCell app={el} />
-                    </Paper>)
-
-            } else {//if there is nothing scheudle for this hour
-                const auxi = i
-                const hilit = auxi==rowLight?'solid ':''
-                ret.push(
-                    <Paper 
-                        elevation={2} 
-                        onDoubleClick = {()=>onDubClick(auxi, date, field,getmaxappLengh(auxi, field, lineapps))}
-                        onClick={()=>_mouseMove(auxi)}
-                        style={{border: `2px ${hilit}#FFB231`, 
-                                margin: 0}}
-                        >
-                            <EmptyCell i={i}/> 
-                    </Paper>
+        switch (field) {
+            case 'Aerobic':
+                {   ret.push([])
+                    ret.push([])
+                    ret.push([])
+                aerobicRooms.map((court) => {
+                    const crtField = parseInt(court.substring(1)) - 1
+                    const t1 = lineapps.filter(el=>el.field==court)
+                    var i 
+                    for ( i = 0;i < dayLenght ; i++) {
+                        const aux = t1.filter(el=>el.time==i)
+                        if (aux.length != 0){
+                            const app = aux[0]
+                            i+= app.duration 
+                            const height = (app.duration +1) * 25
+                            ret[crtField].push(
+                                <Paper 
+                                    elevation={3} style={{height:height }} 
+                                    onClick={()=>_mouseMove(app.time)}
+                                    onDoubleClick={()=>(showapp(app))}
+                                    >
+                                    <FullCell app={app}/>
+                                </Paper>)
+                        } else {
+                            const auxi = i
+                            const hilit = auxi==rowLight?'lit':''
+                            ret[crtField].push(
+                                <Paper 
+                                    elevation={2} 
+                                    onDoubleClick = {()=>onDubClick(auxi, date, court,getmaxappLengh(auxi, court,  lineapps.filter(el=> el.field == court)))}
+                                    onClick={()=>_mouseMove(auxi)}
+                                    className={hilit}
+                                    >
+                                    <EmptyCell i={i}/> 
+                                </Paper>
+                            )
+                        }
+                    }
+                })
+                    return (
+                        <div>
+                            <GridRow wrap='wrap' >
+                                <GridColumn width={4}>
+                                    {ret[0]}
+                                </GridColumn>
+                                <GridColumn width={4}>
+                                    {ret[1]}
+                                </GridColumn>
+                                <GridColumn width={4}>
+                                    {ret[2]}
+                                </GridColumn>
+                            </GridRow>
+                        </div>
                     )
-            }
+                }       
+
+            case 'Tennis':
+                {
+                    ret.push([])
+                    ret.push([])
+                    ret.push([])
+                tennisCourts.map((court) => {
+                    const crtField = parseInt(court.substring(1)) - 1
+                    const t1 = lineapps.filter(el=>el.field==court)
+                    var i 
+                    for ( i = 0;i < dayLenght ; i++) {
+                        const aux = t1.filter(el=>el.time==i)
+                        if (aux.length != 0){
+                            const app = aux[0]
+                            i+= app.duration 
+                            const height = (app.duration +1) * 25
+    
+                            ret[crtField].push(
+                                <Paper 
+                                    elevation={3} style={{height:height }} 
+                                    onClick={()=>_mouseMove(app.time)}
+                                    onDoubleClick={()=>(showapp(app))}
+                                    >
+                                    <FullCell app={app}/>
+                                </Paper>)
+                        } else {
+                            const auxi = i
+                            const Auxfield = 'T' + (crtField+1)
+                            const hilit = auxi==rowLight?'lit':''
+                            ret[crtField].push(
+                                <Paper 
+                                    elevation={2} 
+                                    onDoubleClick = {()=>onDubClick(auxi, date, Auxfield,getmaxappLengh(auxi, Auxfield, lineapps))}
+                                    onClick={()=>_mouseMove(auxi)}
+                                    className={hilit}
+                                    >
+                                    <EmptyCell i={i}/> 
+                                </Paper>
+                            )
+                        }
+                    }
+                })
+                    return (
+                        <div>
+                            <GridRow wrap='wrap' >
+                                <GridColumn width={4}>
+                                    {ret[0]}
+                                </GridColumn>
+                                <GridColumn width={4}>
+                                    {ret[1]}
+                                </GridColumn>
+                                <GridColumn width={4}>
+                                    {ret[2]}
+                                </GridColumn>
+                            </GridRow>
+                        </div>
+                    )
+                }
+        
+            default:
+                {   
+                for ( i = 0;i < dayLenght ; i++){
+                    const aux = lineapps.filter(el => el.time==i)
+                    // console.log(aux)
+                    if (aux.length != 0){
+                        // if (false){
+                        const el = aux[0]
+                        
+                        i+= el.duration
+
+                        const height = (el.duration +1) * 25
+                        ret.push(
+                            <Paper elevation={3} style={{height:height }} 
+                                onClick={()=>_mouseMove(el.time)}
+                                onDoubleClick={()=>(showapp(el))}
+                                >
+                                <FullCell app={el} />
+                            </Paper>)
+
+                    } else {//if there is nothing scheudle for this hour
+                        const auxi = i
+                        const hilit = auxi==rowLight?'solid ':''
+                        ret.push(
+                            <Paper 
+                                elevation={2} 
+                                onDoubleClick = {()=>onDubClick(auxi, date, field,getmaxappLengh(auxi, field, lineapps))}
+                                onClick={()=>_mouseMove(auxi)}
+                                style={{border: `2px ${hilit}#FFB231`, 
+                                        margin: 0}}
+                                >
+                                    <EmptyCell i={i}/> 
+                            </Paper>
+                            )
+                    }
+                }
+                    return ret
+                }
         }
-        return ret
     }
+
+    
 
        return (
 
@@ -132,20 +264,6 @@ const WeekSchedule = ( {field,today, weekMutiplier, setDialog, openShowApp,
             
                         </GridColumn>   
                     )
-                    // const aux = []
-                    // return(
-                    //     <ColumnDateField
-                    //         apps= {aux}
-                    //         rowLight={rowLight}
-                    //         date={el[1]}
-                    //         name={el[0]}
-                    //         field={field} 
-                    //         _mouseMove={onMouseclick}
-                    //         onDubClick={onDubClick}
-                    //         openShowApp={showapp}
-                    //         dayofWeek = {index}
-                    //     />                     
-                    // )
                 })}
                 </GridRow>
 

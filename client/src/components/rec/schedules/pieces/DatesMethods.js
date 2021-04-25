@@ -26,6 +26,13 @@ export const getNumberOfWeek = () => {
   
 //   getMonday(new Date()); // Mon Nov 08 2010
 // }
+
+const getMonday = (date) =>{
+    var curr = new Date(date)
+    var day = curr.getDay()
+    var diff = curr.getDate() - day + (day == 0? -6: 1)
+    return new Date(curr.setDate(diff))
+}
 export const getCrtWeek = (date, language) => {
     var zileleweek
     if(language == 'en')
@@ -33,10 +40,15 @@ export const getCrtWeek = (date, language) => {
     else 
         zileleweek = zileleSaptamanii
     var curr = date
-    var first = curr.getDate() - curr.getDay() + 1
-    // var last = first + 6 
+    //---initial
+    // var first = curr.getDate() - curr.getDay() +1 
+    // var firstday = new Date(curr.setDate(first))
+
+
+    //---seocnd try
     
-    var firstday = new Date(curr.setDate(first))
+    var firstday = getMonday(curr)
+
     // var lastday = new Date(curr.setDate(last))
     // console.log(firstday)
 
